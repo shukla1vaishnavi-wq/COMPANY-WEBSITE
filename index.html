@@ -1,193 +1,1102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Birbal | Empowering Women. Enabling Business.</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    /* ===== CSS VARIABLES & THEME ===== */
+    :root {
+      --primary: #1a56db;
+      --primary-dark: #1447c0;
+      --primary-glow: rgba(26,86,219,0.18);
+      --gold: #f5a623;
+      --bg: #ffffff;
+      --bg2: #f4f7fe;
+      --bg3: #eef2fb;
+      --surface: #ffffff;
+      --border: #dde4f5;
+      --text: #0f172a;
+      --text2: #475569;
+      --text3: #94a3b8;
+      --nav-bg: rgba(255,255,255,0.92);
+      --shadow: 0 4px 24px rgba(26,86,219,0.10);
+      --shadow-lg: 0 16px 48px rgba(26,86,219,0.14);
+      --radius: 14px;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    [data-theme="dark"] {
+      --primary: #4f86f7;
+      --primary-dark: #3b6fe0;
+      --primary-glow: rgba(79,134,247,0.20);
+      --gold: #f5c842;
+      --bg: #0a0f1e;
+      --bg2: #111827;
+      --bg3: #1a2236;
+      --surface: #141c2f;
+      --border: #1e2d4a;
+      --text: #f1f5f9;
+      --text2: #94a3b8;
+      --text3: #475569;
+      --nav-bg: rgba(10,15,30,0.95);
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background var(--transition), color var(--transition);
+      overflow-x: hidden;
+    }
+
+    /* ===== LOADER ===== */
+    #loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 28px;
+      transition: opacity 0.6s, visibility 0.6s;
+    }
+    #loader.hide { opacity: 0; visibility: hidden; }
+    .loader-logo {
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      background: var(--bg2);
+      border: 3px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      animation: loaderPulse 1.6s ease-in-out infinite;
+      overflow: hidden;
+    }
+    .loader-logo img { width: 100px; object-fit: contain; }
+    .loader-track {
+      width: 220px; height: 3px;
+      background: var(--border); border-radius: 99px; overflow: hidden;
+    }
+    .loader-fill {
+      height: 100%; width: 0; background: var(--primary);
+      border-radius: 99px; animation: loaderBar 2.2s ease forwards;
+    }
+    .loader-text { font-size: 0.8rem; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; }
+    @keyframes loaderPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+    @keyframes loaderBar { to { width: 100%; } }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: sticky; top: 0; z-index: 1000;
+      background: var(--nav-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; height: 68px;
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .nav-logo img { height: 42px; object-fit: contain; }
+    .nav-links { list-style: none; display: flex; gap: 8px; align-items: center; }
+    .nav-links a {
+      text-decoration: none; color: var(--text2);
+      font-size: 0.9rem; font-weight: 500;
+      padding: 7px 14px; border-radius: 8px;
+      transition: all var(--transition);
+      position: relative;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--primary); background: var(--primary-glow);
+    }
+    .nav-cta {
+      background: var(--primary) !important;
+      color: #fff !important;
+      border-radius: 8px !important;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--primary-dark) !important; transform: translateY(-1px); }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+
+    /* Dark mode toggle */
+    .theme-toggle {
+      width: 44px; height: 24px;
+      background: var(--border);
+      border-radius: 99px; border: none; cursor: pointer;
+      position: relative; transition: background var(--transition);
+      flex-shrink: 0;
+    }
+    .theme-toggle::after {
+      content: '';
+      position: absolute; top: 3px; left: 3px;
+      width: 18px; height: 18px;
+      background: var(--primary); border-radius: 50%;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), background var(--transition);
+    }
+    [data-theme="dark"] .theme-toggle::after { transform: translateX(20px); }
+    .theme-icon { font-size: 0.85rem; color: var(--text2); }
+
+    .nav-toggle { display: none; font-size: 1.4rem; color: var(--primary); cursor: pointer; background: none; border: none; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: calc(100vh - 68px);
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 0;
+      padding: 0 60px;
+      background: var(--bg);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, var(--primary-glow) 0%, transparent 65%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -150px; left: -150px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, var(--primary-glow) 0%, transparent 65%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero-text { z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--primary-glow); border: 1px solid var(--primary);
+      color: var(--primary); font-size: 0.78rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 99px;
+      margin-bottom: 24px; letter-spacing: 0.5px; text-transform: uppercase;
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero-badge i { font-size: 0.7rem; }
+    .hero-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 4vw, 3.8rem);
+      font-weight: 800; line-height: 1.18;
+      color: var(--text); margin-bottom: 22px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .hero-text h1 span { color: var(--primary); }
+    .hero-text h1 em {
+      font-style: normal; position: relative; display: inline-block;
+    }
+    .hero-text h1 em::after {
+      content: '';
+      position: absolute; bottom: 4px; left: 0; right: 0;
+      height: 3px; background: var(--gold); border-radius: 2px;
+    }
+    .hero-text p {
+      font-size: 1.05rem; color: var(--text2); line-height: 1.8;
+      margin-bottom: 36px; max-width: 480px;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+    .btn {
+      padding: 13px 28px; border-radius: 10px;
+      font-size: 0.93rem; font-weight: 600;
+      text-decoration: none; cursor: pointer;
+      border: none; display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Outfit', sans-serif;
+      transition: all var(--transition);
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 24px var(--primary-glow); }
+    .btn-outline { border: 2px solid var(--border); color: var(--text2); background: transparent; }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-glow); transform: translateY(-2px); }
+
+    /* Hero service pills */
+    .hero-pills {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-top: 36px;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 99px; padding: 8px 16px;
+      font-size: 0.82rem; font-weight: 500; color: var(--text2);
+      transition: all var(--transition); cursor: default;
+      text-decoration: none;
+    }
+    .hero-pill i { color: var(--primary); font-size: 0.78rem; }
+    .hero-pill:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-glow); transform: translateY(-2px); box-shadow: var(--shadow); }
+
+    /* Hero image side */
+    .hero-image {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px 0 40px 40px;
+      animation: fadeLeft 0.8s 0.2s ease both;
+    }
+    .hero-image-frame {
+      position: relative; width: 100%; max-width: 520px;
+    }
+    .hero-image-frame img {
+      width: 100%; border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      object-fit: cover;
+      aspect-ratio: 4/3;
+    }
+    /* Floating badge on image */
+    .hero-float-badge {
+      position: absolute; bottom: -20px; left: -20px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px 20px;
+      box-shadow: var(--shadow-lg);
+      display: flex; align-items: center; gap: 14px;
+      min-width: 200px;
+      animation: float 3s ease-in-out infinite;
+    }
+    .hero-float-badge .badge-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: var(--primary-glow); display: flex;
+      align-items: center; justify-content: center;
+      color: var(--primary); font-size: 1.1rem; flex-shrink: 0;
+    }
+    .hero-float-badge .badge-num {
+      font-size: 1.3rem; font-weight: 800; color: var(--text); line-height: 1;
+    }
+    .hero-float-badge .badge-label { font-size: 0.75rem; color: var(--text2); }
+    .hero-float-top {
+      position: absolute; top: -18px; right: -18px;
+      animation: float 3s 1.5s ease-in-out infinite;
+    }
+    .hero-float-top .hero-float-badge { min-width: 160px; bottom: auto; left: auto; }
+
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
+    @keyframes fadeLeft { from{opacity:0;transform:translateX(32px)} to{opacity:1;transform:none} }
+
+    /* ===== STATS BAND ===== */
+    .stats-band {
+      background: var(--primary);
+      padding: 0;
+      overflow: hidden;
+    }
+    .stats-inner {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      max-width: 1200px; margin: 0 auto;
+    }
+    .stat-item {
+      padding: 36px 20px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.15);
+      transition: background var(--transition);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: rgba(255,255,255,0.08); }
+    .stat-num {
+      font-size: 2.4rem; font-weight: 800; color: #fff; line-height: 1;
+      font-family: 'Playfair Display', serif;
+    }
+    .stat-num sup { font-size: 1rem; vertical-align: super; }
+    .stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.75); margin-top: 6px; }
+
+    /* ===== SECTION COMMON ===== */
+    section { padding: 96px 60px; }
+    .section-eyebrow {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--primary);
+      margin-bottom: 12px; display: block;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3vw, 2.6rem); font-weight: 800;
+      color: var(--text); margin-bottom: 14px; line-height: 1.25;
+    }
+    .section-title span { color: var(--primary); }
+    .section-sub { font-size: 1rem; color: var(--text2); max-width: 560px; line-height: 1.7; }
+    .section-header { margin-bottom: 56px; }
+    .section-header.centered { text-align: center; }
+    .section-header.centered .section-sub { margin: 0 auto; }
+
+    /* ===== SERVICES GRID ===== */
+    .services-section { background: var(--bg2); }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px; max-width: 1200px; margin: 0 auto;
+    }
+    .service-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 36px 28px;
+      transition: all var(--transition); cursor: pointer;
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--primary); transform: scaleX(0); transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+    .service-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: var(--primary-glow); display: flex;
+      align-items: center; justify-content: center;
+      color: var(--primary); font-size: 1.3rem;
+      margin-bottom: 20px; transition: all var(--transition);
+    }
+    .service-card:hover .service-icon { background: var(--primary); color: #fff; }
+    .service-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+    .service-card p { font-size: 0.88rem; color: var(--text2); line-height: 1.7; }
+    .service-arrow {
+      margin-top: 20px; display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.83rem; font-weight: 600; color: var(--primary);
+      text-decoration: none; transition: gap var(--transition);
+    }
+    .service-card:hover .service-arrow { gap: 10px; }
+
+    /* ===== WHO WE ARE ===== */
+    .who-section { background: var(--bg); }
+    .who-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 72px; align-items: center; max-width: 1200px; margin: 0 auto;
+    }
+    .who-img { position: relative; }
+    .who-img img {
+      width: 100%; border-radius: 20px; object-fit: cover;
+      box-shadow: var(--shadow-lg);
+    }
+    .who-exp-badge {
+      position: absolute; bottom: -18px; right: -18px;
+      background: var(--primary); color: #fff;
+      border-radius: 14px; padding: 18px 22px; text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+    .who-exp-badge .exp-num { font-size: 2rem; font-weight: 800; display: block; line-height: 1; }
+    .who-exp-badge .exp-label { font-size: 0.75rem; opacity: 0.85; }
+    .who-text p { font-size: 0.97rem; color: var(--text2); line-height: 1.9; margin-bottom: 16px; }
+    .who-tags { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+    .who-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--primary-glow); color: var(--primary);
+      border: 1px solid var(--primary); border-radius: 99px;
+      padding: 7px 16px; font-size: 0.85rem; font-weight: 600;
+    }
+
+    /* ===== WHY US ===== */
+    .why-section { background: var(--bg2); }
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; max-width: 1200px; margin: 0 auto;
+    }
+    .why-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px 28px;
+      transition: all var(--transition);
+    }
+    .why-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--shadow); }
+    .why-card i { font-size: 1.7rem; color: var(--primary); margin-bottom: 16px; display: block; }
+    .why-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .why-card p { font-size: 0.87rem; color: var(--text2); line-height: 1.7; }
+
+    /* ===== COMPARISON ===== */
+    .comparison-section { background: var(--bg); }
+    .comparison-wrap { max-width: 900px; margin: 0 auto; }
+    .comparison-table {
+      border-radius: var(--radius); overflow: hidden;
+      border: 1px solid var(--border); box-shadow: var(--shadow-lg);
+    }
+    .cmp-header {
+      display: grid; grid-template-columns: 2fr 1.5fr 1.5fr;
+      background: var(--primary); padding: 18px 28px;
+      font-weight: 700; font-size: 0.9rem; color: #fff;
+    }
+    .cmp-header div:not(:first-child) { text-align: center; }
+    .cmp-row {
+      display: grid; grid-template-columns: 2fr 1.5fr 1.5fr;
+      padding: 16px 28px; border-bottom: 1px solid var(--border);
+      font-size: 0.88rem; transition: background var(--transition);
+      align-items: center;
+    }
+    .cmp-row:last-child { border-bottom: none; }
+    .cmp-row:hover { background: var(--bg2); }
+    .cmp-row:nth-child(even) { background: var(--bg2); }
+    .cmp-row:nth-child(even):hover { background: var(--bg3); }
+    .cmp-feature { font-weight: 600; color: var(--text); }
+    .cmp-yes { text-align: center; color: #22c55e; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .cmp-no { text-align: center; color: #ef4444; display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+    /* ===== CLIENTS ===== */
+    .clients-section { background: var(--bg2); }
+    .clients-marquee-wrap { overflow: hidden; position: relative; }
+    .clients-marquee-wrap::before,
+    .clients-marquee-wrap::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 100px; z-index: 2;
+    }
+    .clients-marquee-wrap::before { left: 0; background: linear-gradient(to right, var(--bg2), transparent); }
+    .clients-marquee-wrap::after { right: 0; background: linear-gradient(to left, var(--bg2), transparent); }
+    .clients-marquee {
+      display: flex; gap: 24px;
+      animation: marquee 28s linear infinite;
+      width: max-content;
+    }
+    .clients-marquee:hover { animation-play-state: paused; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .client-chip {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 24px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.88rem; font-weight: 600; color: var(--text2);
+      white-space: nowrap; flex-shrink: 0;
+      transition: all var(--transition);
+    }
+    .client-chip:hover { border-color: var(--primary); color: var(--primary); }
+    .client-chip i { color: var(--primary); font-size: 1rem; }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials-section { background: var(--bg); }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px; max-width: 1200px; margin: 0 auto;
+    }
+    .testi-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px;
+      transition: all var(--transition); position: relative;
+    }
+    .testi-card::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem; color: var(--primary); opacity: 0.12;
+      position: absolute; top: 8px; left: 20px; line-height: 1;
+    }
+    .testi-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--shadow); }
+    .testi-text {
+      font-size: 0.9rem; color: var(--text2); line-height: 1.85;
+      margin-bottom: 24px; font-style: italic;
+    }
+    .testi-author { display: flex; align-items: center; gap: 14px; }
+    .testi-avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--primary-glow); border: 2px solid var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--primary); font-size: 1rem; flex-shrink: 0; overflow: hidden;
+    }
+    .testi-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .testi-name { font-size: 0.93rem; font-weight: 700; color: var(--text); }
+    .testi-role { font-size: 0.78rem; color: var(--primary); }
+    .testi-stars { color: var(--gold); font-size: 0.78rem; margin-bottom: 14px; }
+
+    /* ===== MISSION VISION VALUES ===== */
+    .mvv-section { background: var(--bg2); }
+    .mvv-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px; max-width: 1200px; margin: 0 auto;
+    }
+    .mvv-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 36px 28px; text-align: center;
+      transition: all var(--transition);
+    }
+    .mvv-card:hover { transform: translateY(-6px); border-color: var(--primary); box-shadow: var(--shadow); }
+    .mvv-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--primary-glow); border: 2px solid var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; color: var(--primary); margin: 0 auto 20px;
+    }
+    .mvv-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+    .mvv-card p { font-size: 0.87rem; color: var(--text2); line-height: 1.8; }
+
+    /* ===== PARTNER CTA ===== */
+    .partner-cta {
+      background: var(--primary);
+      text-align: center; padding: 100px 60px;
+    }
+    .partner-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3vw, 3rem); font-weight: 800;
+      color: #fff; margin-bottom: 18px; line-height: 1.25;
+      max-width: 700px; margin-left: auto; margin-right: auto;
+    }
+    .partner-cta h2 span { color: var(--gold); }
+    .partner-cta p { color: rgba(255,255,255,0.82); font-size: 1rem; margin-bottom: 36px; }
+    .partner-cta .btn-white { background: #fff; color: var(--primary); border: none; }
+    .partner-cta .btn-white:hover { background: var(--bg2); transform: translateY(-2px); }
+    .partner-cta .btn-ghost { border: 2px solid rgba(255,255,255,0.5); color: #fff; background: transparent; }
+    .partner-cta .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+    .partner-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #0f172a;
+      padding: 72px 60px 36px;
+      color: #94a3b8;
+    }
+    [data-theme="dark"] .footer { background: #060b18; }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; max-width: 1200px; margin: 0 auto 56px;
+    }
+    .footer-brand img { height: 48px; background: #fff; padding: 6px 12px; border-radius: 8px; margin-bottom: 18px; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.8; max-width: 260px; }
+    .footer-social { display: flex; gap: 12px; margin-top: 22px; }
+    .footer-social a {
+      width: 38px; height: 38px; border-radius: 9px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      color: #94a3b8; font-size: 0.95rem; text-decoration: none;
+      transition: all var(--transition);
+    }
+    .footer-social a:hover { background: var(--primary); border-color: var(--primary); color: #fff; transform: translateY(-2px); }
+    .footer-col h4 { color: #f1f5f9; font-size: 0.9rem; font-weight: 700; margin-bottom: 18px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a {
+      text-decoration: none; color: #94a3b8; font-size: 0.86rem;
+      transition: color var(--transition);
+    }
+    .footer-col ul li a:hover { color: #f1f5f9; }
+    .footer-contact-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.86rem; margin-bottom: 12px;
+    }
+    .footer-contact-item i { color: var(--primary); margin-top: 2px; font-size: 0.85rem; }
+    .footer-bottom {
+      max-width: 1200px; margin: 0 auto;
+      padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+      font-size: 0.82rem; color: #475569;
+    }
+    .footer-bottom a { color: #475569; text-decoration: none; transition: color var(--transition); }
+    .footer-bottom a:hover { color: #f1f5f9; }
+
+    /* ===== BACK TO TOP ===== */
+    #backTop {
+      position: fixed; bottom: 28px; right: 28px;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--primary); color: #fff; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; opacity: 0; transform: translateY(16px);
+      transition: all var(--transition); z-index: 999;
+      box-shadow: 0 4px 16px var(--primary-glow);
+    }
+    #backTop.show { opacity: 1; transform: none; }
+    #backTop:hover { transform: translateY(-3px); }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 900px) {
+      .navbar { padding: 0 24px; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--nav-bg); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 20px 24px; gap: 4px; }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: block; }
+      .hero { grid-template-columns: 1fr; padding: 48px 24px; min-height: auto; gap: 40px; }
+      .hero-image { padding: 0; }
+      .hero-float-badge { display: none; }
+      .stats-inner { grid-template-columns: repeat(3, 1fr); }
+      .stat-item:nth-child(4), .stat-item:nth-child(5) { border-top: 1px solid rgba(255,255,255,0.15); }
+      section { padding: 60px 24px; }
+      .who-inner { grid-template-columns: 1fr; gap: 40px; }
+      .who-exp-badge { right: 10px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+      .footer { padding: 56px 24px 28px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .partner-cta { padding: 72px 24px; }
+    }
+    @media (max-width: 520px) {
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- LOADING SCREEN -->
-  <div class="loader" id="loader">
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal" />
+  </div>
+  <div class="loader-track"><div class="loader-fill"></div></div>
+  <span class="loader-text">Loading TheBirbal</span>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
-    <div class="loader-bar">
-      <div class="loader-bar-fill"></div>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="careers.html">Join Us</a></li>
+    <li><a href="people.html">Our People</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="theme-icon"><i class="fas fa-sun" id="themeIcon"></i></span>
+    <button class="theme-toggle" id="themeToggle" title="Toggle dark mode"></button>
+    <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge"><i class="fas fa-star"></i> India's #1 Women-First Work Platform</div>
+    <h1>Empowering Women.<br/><em><span>Enabling</span> Business.</em></h1>
+    <p>Work from home opportunities, outsourcing solutions, and startup consulting — all under one roof. Trusted by 120+ businesses across India.</p>
+    <div class="hero-actions">
+      <a href="careers.html" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Join Us Today</a>
+      <a href="contact.html" class="btn btn-outline">Enquire Now</a>
+    </div>
+    <div class="hero-pills">
+      <a href="services.html#sales" class="hero-pill"><i class="fas fa-phone-alt"></i> Sales Support</a>
+      <a href="services.html#customer" class="hero-pill"><i class="fas fa-headset"></i> Customer Support</a>
+      <a href="services.html#recruitment" class="hero-pill"><i class="fas fa-users"></i> Recruitment Support</a>
+      <a href="services.html#transaction" class="hero-pill"><i class="fas fa-chart-line"></i> Transaction Services</a>
+      <a href="services.html#hotel" class="hero-pill"><i class="fas fa-hotel"></i> Hotel Call Center</a>
     </div>
   </div>
+  <div class="hero-image">
+    <div class="hero-image-frame">
+      <img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2023/10/DSC_852119.jpg?fit=768%2C477&ssl=1"
+           alt="TheBirbal Team — Agile, Scalable, Reliable" />
+      <div class="hero-float-badge">
+        <div class="badge-icon"><i class="fas fa-users"></i></div>
+        <div>
+          <div class="badge-num">500<sup>+</sup></div>
+          <div class="badge-label">Women Empowered</div>
+        </div>
+      </div>
+      <div class="hero-float-top">
+        <div class="hero-float-badge" style="position:relative;bottom:auto;left:auto;">
+          <div class="badge-icon"><i class="fas fa-building"></i></div>
+          <div>
+            <div class="badge-num">120<sup>+</sup></div>
+            <div class="badge-label">Business Partners</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="nav-logo">
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num"><span class="counter" data-target="10">0</span><sup>Mn+</sup></div>
+      <div class="stat-label">Customer Connects</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="counter" data-target="80">0</span><sup>+</sup></div>
+      <div class="stat-label">B2B Client Connects</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="counter" data-target="500">0</span><sup>+</sup></div>
+      <div class="stat-label">Resources</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="counter" data-target="120">0</span><sup>+</sup></div>
+      <div class="stat-label">Assignments</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="counter" data-target="35">0</span><sup>+</sup></div>
+      <div class="stat-label">Happy Clients</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <div class="section-header centered">
+    <span class="section-eyebrow">What We Do</span>
+    <h2 class="section-title">Our <span>Services</span></h2>
+    <p class="section-sub">Connecting talent with opportunity, and businesses with growth across India.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-phone-alt"></i></div>
+      <h3>Sales Support</h3>
+      <p>Inside sales, telecalling, lead generation and sales ops handled by trained, experienced women professionals.</p>
+      <a href="services.html" class="service-arrow">Learn more <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-headset"></i></div>
+      <h3>Customer Support</h3>
+      <p>End-to-end customer service including inbound, outbound, chat and email support in 15+ languages.</p>
+      <a href="services.html" class="service-arrow">Learn more <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-user-tie"></i></div>
+      <h3>Recruitment Support</h3>
+      <p>Full-cycle hiring and HR services — sourcing, screening, onboarding, and workforce management.</p>
+      <a href="services.html" class="service-arrow">Learn more <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+      <h3>Transaction Services</h3>
+      <p>Capital raising, secondary equity deal support and financial advisory for growing businesses.</p>
+      <a href="services.html" class="service-arrow">Learn more <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-hotel"></i></div>
+      <h3>Hotel Call Center</h3>
+      <p>Specialized hospitality call center services that maximize reservations and guest satisfaction.</p>
+      <a href="services.html" class="service-arrow">Learn more <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE ARE -->
+<section class="who-section">
+  <div class="who-inner">
+    <div class="who-img reveal">
+      <img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2024/07/thebirbal-team.jpg?fit=5005%2C3529&ssl=1" alt="TheBirbal Team" />
+      <div class="who-exp-badge">
+        <span class="exp-num">8+</span>
+        <span class="exp-label">Years of Excellence</span>
+      </div>
+    </div>
+    <div class="who-text reveal">
+      <span class="section-eyebrow">Who We Are</span>
+      <h2 class="section-title">Agile, Scalable &amp;<br/><span>Reliable by Design</span></h2>
+      <p>TheBirbal team is an extension of your in-house team and we are there to co-create your success journey. We are a community of diversified and highly skilled professionals who deliver world-class experience.</p>
+      <p>Our All-Women community consists of professionals with hands-on experience in sales, service, customer engagement and recruitment. We provide corporate work opportunities with the freedom of work from anywhere.</p>
+      <p>Creating an impact in Travel, Hospitality, Edutech, Insurance, Ecommerce and many more industries with a distributed workforce setup.</p>
+      <div class="who-tags">
+        <span class="who-tag"><i class="fas fa-check"></i> Agile</span>
+        <span class="who-tag"><i class="fas fa-check"></i> Scalable</span>
+        <span class="who-tag"><i class="fas fa-check"></i> Reliable</span>
+        <span class="who-tag"><i class="fas fa-check"></i> Pan India</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY THEBIRBAL -->
+<section class="why-section">
+  <div class="section-header centered">
+    <span class="section-eyebrow">Why Choose Us</span>
+    <h2 class="section-title">Why <span>TheBirbal?</span></h2>
+    <p class="section-sub">The right skill set, regional coverage and experienced workforce — all in one place.</p>
+  </div>
+  <div class="why-grid reveal">
+    <div class="why-card"><i class="fas fa-bolt"></i><h3>Plug &amp; Play Model</h3><p>A week is all we need to build your model up and running. Zero setup hassle.</p></div>
+    <div class="why-card"><i class="fas fa-language"></i><h3>Multilingual Workforce</h3><p>15+ language capabilities to connect with customers across India and beyond.</p></div>
+    <div class="why-card"><i class="fas fa-map-marked-alt"></i><h3>Pan India Presence</h3><p>Women professionals spread across every major city and Tier 2 towns of India.</p></div>
+    <div class="why-card"><i class="fas fa-sliders-h"></i><h3>Customized Solutions</h3><p>Solutions tailored as your voice and tone, adapted to your unique business needs.</p></div>
+    <div class="why-card"><i class="fas fa-rupee-sign"></i><h3>Cost Effective</h3><p>Move from fixed OpEx to variable OpEx. Save on direct and indirect costs with better outcomes.</p></div>
+    <div class="why-card"><i class="fas fa-sync-alt"></i><h3>High Agility</h3><p>Our constant learning culture makes us highly agile as per the fast-changing world.</p></div>
+    <div class="why-card"><i class="fas fa-tasks"></i><h3>End-to-End Management</h3><p>Planning, hiring, performance monitoring, result tracking — we take care of all.</p></div>
+    <div class="why-card"><i class="fas fa-award"></i><h3>Experienced Workforce</h3><p>Matured professionals who understand business needs and deliver results consistently.</p></div>
+    <div class="why-card"><i class="fas fa-shield-alt"></i><h3>Trusted &amp; Secure</h3><p>Everything we do is customer-centric, seamless and secure. Your data is always safe.</p></div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="comparison-section">
+  <div class="section-header centered">
+    <span class="section-eyebrow">Competitive Advantage</span>
+    <h2 class="section-title">TheBirbal <span>vs</span> Conventional</h2>
+    <p class="section-sub">See why businesses choose us over traditional hiring and outsourcing methods.</p>
+  </div>
+  <div class="comparison-wrap reveal">
+    <div class="comparison-table">
+      <div class="cmp-header">
+        <div>Criteria</div>
+        <div>TheBirbal ✨</div>
+        <div>Conventional</div>
+      </div>
+      <div class="cmp-row"><div class="cmp-feature">Recruitment Support</div><div class="cmp-yes"><i class="fas fa-star"></i> Excellent (4.5/5)</div><div class="cmp-no"><i class="fas fa-star-half"></i> Average (3/5)</div></div>
+      <div class="cmp-row"><div class="cmp-feature">Training &amp; Onboarding</div><div class="cmp-yes"><i class="fas fa-check-circle"></i> Full Support (5/5)</div><div class="cmp-no"><i class="fas fa-times-circle"></i> Limited (1/5)</div></div>
+      <div class="cmp-row"><div class="cmp-feature">Workforce Management</div><div class="cmp-yes"><i class="fas fa-check-circle"></i> Managed (4/5)</div><div class="cmp-no"><i class="fas fa-times-circle"></i> Self-managed (1/5)</div></div>
+      <div class="cmp-row"><div class="cmp-feature">Seasoned &amp; Skilled Resources</div><div class="cmp-yes"><i class="fas fa-check-circle"></i> Highly Skilled (4/5)</div><div class="cmp-no"><i class="fas fa-times-circle"></i> Mixed (1/5)</div></div>
+      <div class="cmp-row"><div class="cmp-feature">Multilingual Workforce</div><div class="cmp-yes"><i class="fas fa-check-circle"></i> 15+ Languages (4/5)</div><div class="cmp-no"><i class="fas fa-times-circle"></i> Limited (2/5)</div></div>
+      <div class="cmp-row"><div class="cmp-feature">Scalability</div><div class="cmp-yes"><i class="fas fa-check-circle"></i> Instant Scale (4/5)</div><div class="cmp-no"><i class="fas fa-times-circle"></i> Difficult (1/5)</div></div>
+      <div class="cmp-row"><div class="cmp-feature">Cost Effectiveness</div><div class="cmp-yes"><i class="fas fa-check-circle"></i> Variable OpEx (5/5)</div><div class="cmp-no"><i class="fas fa-times-circle"></i> High Fixed Cost (1/5)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS MARQUEE -->
+<section class="clients-section">
+  <div class="section-header centered">
+    <span class="section-eyebrow">Trusted By</span>
+    <h2 class="section-title">Our <span>Happy Clients</span></h2>
+    <p class="section-sub">Trusted by leading businesses across India from startups to unicorns.</p>
+  </div>
+  <div class="clients-marquee-wrap">
+    <div class="clients-marquee">
+      <!-- Set 1 -->
+      <div class="client-chip"><i class="fas fa-building"></i> MakeMyTrip</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Byju's</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Licious</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Simplotel</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Leisure Hotels</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Beyond Stay</div>
+      <div class="client-chip"><i class="fas fa-building"></i> PlanetSpark</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Speedlabs</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Quess Corp</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Cleartrip</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Cordelia Cruises</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Tatra Dham</div>
+      <!-- Set 2 (duplicate for seamless loop) -->
+      <div class="client-chip"><i class="fas fa-building"></i> MakeMyTrip</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Byju's</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Licious</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Simplotel</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Leisure Hotels</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Beyond Stay</div>
+      <div class="client-chip"><i class="fas fa-building"></i> PlanetSpark</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Speedlabs</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Quess Corp</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Cleartrip</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Cordelia Cruises</div>
+      <div class="client-chip"><i class="fas fa-building"></i> Tatra Dham</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-header centered">
+    <span class="section-eyebrow">Client Voices</span>
+    <h2 class="section-title">What Our <span>Clients Say</span></h2>
+    <p class="section-sub">Real partnerships, real results — hear it straight from our clients.</p>
+  </div>
+  <div class="testimonials-grid reveal">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"It's a great partnership with TheBirbal. The team is agile and is able to make the setup live in short time. We appreciate their attention to details and creative approach to achieve desired objectives."</p>
+      <div class="testi-author">
+        <div class="testi-avatar"><img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2022/06/2.jpg?fit=392%2C388&ssl=1" alt="Mayank Goel"/></div>
+        <div><div class="testi-name">Mayank Goel</div><div class="testi-role">COO, UOLO Technology</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"TheBirbal is a great start-up. They're adept in building end-to-end setup in short time. They have deep understanding of the travel business and its dynamics. They live up to their value of customer focus."</p>
+      <div class="testi-author">
+        <div class="testi-avatar"><img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2022/06/3.jpg?fit=392%2C388&ssl=1" alt="Dhaval Jaani"/></div>
+        <div><div class="testi-name">Dhaval Jaani</div><div class="testi-role">Founder &amp; CEO, Beyond Stay</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"We are impressed by the offering of TheBirbal. They solve a very interesting problem in a very creative and cost effective manner. The team is super responsive and is very focused on ensuring their customers succeed."</p>
+      <div class="testi-author">
+        <div class="testi-avatar"><img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2022/06/5.jpg?fit=392%2C388&ssl=1" alt="Tarun Goyal"/></div>
+        <div><div class="testi-name">Tarun Goyal</div><div class="testi-role">Founder &amp; CEO, Simplotel</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"We are delighted to say that the experience has been more like dealing with an extension of our in-house team rather than an outsourcing partner. Their plug &amp; play model has met our agile needs perfectly."</p>
+      <div class="testi-author">
+        <div class="testi-avatar"><img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2023/04/Vibhas-Sir-Pic.png?fit=448%2C513&ssl=1" alt="Vibhas Prasad"/></div>
+        <div><div class="testi-name">Vibhas Prasad</div><div class="testi-role">Director, Leisure Hotels &amp; Resorts</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The team Birbal delivered to our expectations and the client's delight. Happy to recommend TheBirbal team based on our experience and the professionalism demonstrated through the entire engagement."</p>
+      <div class="testi-author">
+        <div class="testi-avatar"><img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2022/06/1.jpg?fit=392%2C388&ssl=1" alt="Sheshagiri"/></div>
+        <div><div class="testi-name">Sheshagiri Gudipudi</div><div class="testi-role">CEO, Drsya Technology</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"It was impressive and satisfying to work with the team. Sushil has been supportive in ideation and planning of activities. Congratulations for such a unique idea and best wishes for exponential success."</p>
+      <div class="testi-author">
+        <div class="testi-avatar"><img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2022/06/4.jpg?fit=392%2C388&ssl=1" alt="Vivek Varshney"/></div>
+        <div><div class="testi-name">Vivek Varshney</div><div class="testi-role">Founder &amp; CEO, Speedlabs</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION VISION VALUES -->
+<section class="mvv-section">
+  <div class="section-header centered">
+    <span class="section-eyebrow">Our Foundation</span>
+    <h2 class="section-title">Mission, Vision <span>&amp; Values</span></h2>
+    <p class="section-sub">The principles that guide every decision we make at TheBirbal.</p>
+  </div>
+  <div class="mvv-grid reveal">
+    <div class="mvv-card">
+      <div class="mvv-icon"><i class="fas fa-rocket"></i></div>
+      <h3>Our Mission</h3>
+      <p>To spearhead business profitability through cost-effective and unique distribution channels while empowering women to build meaningful careers.</p>
+    </div>
+    <div class="mvv-card">
+      <div class="mvv-icon"><i class="fas fa-eye"></i></div>
+      <h3>Our Vision</h3>
+      <p>Promote and organize work-from-home culture to benefit untapped women talent and create 100,000 opportunities in the next 10 years.</p>
+    </div>
+    <div class="mvv-card">
+      <div class="mvv-icon"><i class="fas fa-heart"></i></div>
+      <h3>Our Values</h3>
+      <p>Trust, Empowerment, Innovation, Excellence and People First — not just words, but the foundation of every decision we make.</p>
+    </div>
+    <div class="mvv-card">
+      <div class="mvv-icon"><i class="fas fa-seedling"></i></div>
+      <h3>Our Culture</h3>
+      <p>Building a culture of Freedom, Work-Life Balance and Innovation for enterprising, enthusiastic and motivated people across India.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNER CTA -->
+<section class="partner-cta">
+  <h2>Partner With Us to <span>Fast-Track Your Business Growth</span></h2>
+  <p>Whether you're looking to hire, outsource, raise funds, or build your startup — TheBirbal is your growth partner.</p>
+  <div class="partner-btns">
+    <a href="contact.html" class="btn btn-white">Enquire Now <i class="fas fa-arrow-right"></i></a>
+    <a href="services.html" class="btn btn-ghost">Explore Services</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
+      <p>TheBirbal Consulting is essentially about thinking smart and different to enable businesses in today's dynamic, tech-driven environment.</p>
+      <div class="footer-social">
+        <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.instagram.com/thebirbal_wfh/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@thebirbalWFH" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+      </div>
     </div>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="careers.html">Join Us</a></li>
-      <li><a href="people.html">Our People</a></li>
-      <li><a href="blog.html">Blog</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="nav-toggle" id="navToggle">
-      <i class="fas fa-bars"></i>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="people.html">Our People</a></li>
+        <li><a href="careers.html">Join Us</a></li>
+        <li><a href="blog.html">Blogs</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
     </div>
-  </nav>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html">Sales Support</a></li>
+        <li><a href="services.html">Customer Support</a></li>
+        <li><a href="services.html">Recruitment Support</a></li>
+        <li><a href="services.html">Transaction Services</a></li>
+        <li><a href="services.html">Hotel Call Center</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>Delhi, India</span></div>
+      <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>info@thebirbal.com</span></div>
+      <div class="footer-contact-item"><i class="fas fa-clock"></i><span>Mon–Sat: 9AM – 6PM</span></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 TheBirbal Consulting. All Rights Reserved.</span>
+    <span>Made with <i class="fas fa-heart" style="color:#ef4444"></i> for Women Empowerment</span>
+  </div>
+</footer>
 
-  <!-- HERO SECTION -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Empowering Women.<br/><span>Enabling Business.</span></h1>
-      <p>Work from home opportunities, outsourcing solutions, and startup consulting — all under one roof.</p>
-      <div class="hero-buttons">
-        <a href="careers.html" class="btn btn-primary">Join Us Today</a>
-        <a href="services.html" class="btn btn-outline">Our Services</a>
-      </div>
-    </div>
-  </section>
+<!-- BACK TO TOP -->
+<button id="backTop" title="Back to top"><i class="fas fa-arrow-up"></i></button>
 
-  <!-- STATS SECTION -->
-  <section class="stats">
-    <div class="stat-card">
-      <h2 class="counter" data-target="500">0</h2>
-      <p>Women Placed</p>
-    </div>
-    <div class="stat-card">
-      <h2 class="counter" data-target="120">0</h2>
-      <p>Business Partners</p>
-    </div>
-    <div class="stat-card">
-      <h2 class="counter" data-target="8">0</h2>
-      <p>Years of Experience</p>
-    </div>
-    <div class="stat-card">
-      <h2 class="counter" data-target="15">0</h2>
-      <p>Cities Covered</p>
-    </div>
-  </section>
+<script>
+  // === LOADER ===
+  const loader = document.getElementById('loader');
+  const hasLoaded = sessionStorage.getItem('birbalLoaded');
+  if (hasLoaded) {
+    loader.style.display = 'none';
+  } else {
+    sessionStorage.setItem('birbalLoaded', '1');
+    window.addEventListener('load', () => setTimeout(() => loader.classList.add('hide'), 2200));
+  }
 
-  <!-- SERVICES SECTION -->
-  <section class="services">
-    <h2 class="section-title">What We <span>Do</span></h2>
-    <p class="section-subtitle">Connecting talent with opportunity, and businesses with growth.</p>
-    <div class="services-grid">
-      <div class="service-card">
-        <i class="fas fa-laptop-house"></i>
-        <h3>Work From Home</h3>
-        <p>Flexible remote jobs for women in sales, customer service, and recruitment.</p>
-      </div>
-      <div class="service-card">
-        <i class="fas fa-handshake"></i>
-        <h3>Outsourcing</h3>
-        <p>Managed services and outsourcing solutions tailored for your business needs.</p>
-      </div>
-      <div class="service-card">
-        <i class="fas fa-chart-line"></i>
-        <h3>Transaction Services</h3>
-        <p>Capital raising and secondary equity deal support for growing companies.</p>
-      </div>
-      <div class="service-card">
-        <i class="fas fa-lightbulb"></i>
-        <h3>Startup Consulting</h3>
-        <p>Strategic guidance to help early-stage startups scale and succeed.</p>
-      </div>
-    </div>
-  </section>
+  // === DARK MODE ===
+  const html = document.documentElement;
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const savedTheme = localStorage.getItem('birbalTheme') || 'light';
+  html.setAttribute('data-theme', savedTheme);
+  updateIcon(savedTheme);
 
-  <!-- WHY US SECTION -->
-  <section class="why-us">
-    <h2 class="section-title">Why Choose <span>TheBirbal?</span></h2>
-    <p class="section-subtitle">We're not just a platform — we're a community that believes in potential.</p>
-    <div class="why-grid">
-      <div class="why-card">
-        <i class="fas fa-shield-alt"></i>
-        <h3>Trusted Platform</h3>
-        <p>Verified opportunities from real businesses. No fake jobs, no scams.</p>
-      </div>
-      <div class="why-card">
-        <i class="fas fa-graduation-cap"></i>
-        <h3>Training Provided</h3>
-        <p>Full onboarding and training support so you're never left on your own.</p>
-      </div>
-      <div class="why-card">
-        <i class="fas fa-users"></i>
-        <h3>Strong Community</h3>
-        <p>Join 500+ women who are already earning and growing with TheBirbal.</p>
-      </div>
-      <div class="why-card">
-        <i class="fas fa-rupee-sign"></i>
-        <h3>Timely Payments</h3>
-        <p>Performance-based incentives with assured and timely payouts.</p>
-      </div>
-    </div>
-  </section>
+  themeToggle.addEventListener('click', () => {
+    const current = html.getAttribute('data-theme');
+    const next = current === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('birbalTheme', next);
+    updateIcon(next);
+  });
+  function updateIcon(theme) {
+    themeIcon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+  }
 
-  <!-- TESTIMONIALS -->
-  <section class="testimonials">
-    <h2 class="section-title">What Our <span>Community Says</span></h2>
-    <p class="section-subtitle">Real stories from real women who changed their lives.</p>
-    <div class="testimonials-grid">
+  // === MOBILE NAV ===
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
-      <div class="testimonial-card">
-        <p>"Working with TheBirbal has been one of the best opportunities I have ever got. The company empowers you to take decisions and perform to the best."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
-          <div>
-            <h4>Khushboo</h4>
-            <span>Project Associate</span>
-          </div>
-        </div>
-      </div>
+  // === STATS COUNTER (fixed: each counter animates independently) ===
+  const counters = document.querySelectorAll('.counter');
+  let countersAnimated = false;
 
-      <div class="testimonial-card">
-        <p>"I love how much I have grown in such a short span of time with TheBirbal. The company culture and our mentors are truly the icing on the cake."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
-          <div>
-            <h4>Drishti</h4>
-            <span>Project Associate</span>
-          </div>
-        </div>
-      </div>
+  const statsObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting || countersAnimated) return;
+      countersAnimated = true;
 
-      <div class="testimonial-card">
-        <p>"TheBirbal is a place where you can paint your own canvas. It gives you many opportunities to excel and empowers you to achieve your goals."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar"><i class="fas fa-user"></i></div>
-          <div>
-            <h4>Heena</h4>
-            <span>Project Associate</span>
-          </div>
-        </div>
-      </div>
+      counters.forEach(c => {
+        const target = +c.dataset.target;
+        const duration = 1600;
+        const startTime = performance.now();
 
-    </div>
-  </section>
+        const tick = (now) => {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease out
+          const eased = 1 - Math.pow(1 - progress, 3);
+          c.textContent = Math.ceil(eased * target);
+          if (progress < 1) requestAnimationFrame(tick);
+        };
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-logo">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
-    </div>
-    <p>Empowering women. Enabling business. Building futures.</p>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="careers.html">Join Us</a>
-      <a href="people.html">Our People</a>
-      <a href="blog.html">Blog</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <div class="footer-social">
-      <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://www.instagram.com/thebirbal_wfh/" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.youtube.com/@thebirbalWFH" target="_blank"><i class="fab fa-youtube"></i></a>
-    </div>
-    <p class="footer-copy">&copy; 2025 TheBirbal. All rights reserved.</p>
-  </footer>
+        requestAnimationFrame(tick);
+      });
 
-  <script src="js/main.js"></script>
+      statsObserver.disconnect();
+    });
+  }, { threshold: 0.5 });
+
+  const statsBand = document.querySelector('.stats-band');
+  if (statsBand) statsObserver.observe(statsBand);
+
+  // === SCROLL REVEAL ===
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        Array.from(entry.target.children).forEach((child, i) => {
+          child.style.transitionDelay = `${i * 0.08}s`;
+        });
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => revealObserver.observe(r));
+
+  // === BACK TO TOP ===
+  const backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', () => backTop.classList.toggle('show', window.scrollY > 400));
+  backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
 </body>
 </html>
