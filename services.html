@@ -1,134 +1,410 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Services | TheBirbal</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    :root{--primary:#1a56db;--primary-dark:#1447c0;--primary-glow:rgba(26,86,219,0.14);--gold:#f5a623;--bg:#fff;--bg2:#f4f7fe;--bg3:#eef2fb;--surface:#fff;--border:#dde4f5;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--nav-bg:rgba(255,255,255,0.93);--shadow:0 4px 24px rgba(26,86,219,0.10);--shadow-lg:0 16px 48px rgba(26,86,219,0.14);--radius:14px;--transition:0.3s cubic-bezier(0.4,0,0.2,1)}
+    [data-theme="dark"]{--primary:#4f86f7;--primary-dark:#3b6fe0;--primary-glow:rgba(79,134,247,0.18);--gold:#f5c842;--bg:#0a0f1e;--bg2:#111827;--bg3:#1a2236;--surface:#141c2f;--border:#1e2d4a;--text:#f1f5f9;--text2:#94a3b8;--text3:#475569;--nav-bg:rgba(10,15,30,0.95);--shadow:0 4px 24px rgba(0,0,0,0.4);--shadow-lg:0 16px 48px rgba(0,0,0,0.5)}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s;overflow-x:hidden}
+    #loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s,visibility .6s}
+    #loader.hide{opacity:0;visibility:hidden}
+    .loader-logo{width:110px;height:110px;border-radius:50%;background:var(--bg2);border:3px solid var(--border);display:flex;align-items:center;justify-content:center;animation:lPulse 1.6s ease-in-out infinite;overflow:hidden}
+    .loader-logo img{width:80px;object-fit:contain}
+    .loader-track{width:200px;height:3px;background:var(--border);border-radius:99px;overflow:hidden}
+    .loader-fill{height:100%;width:0;background:var(--primary);border-radius:99px;animation:lBar 2s ease forwards}
+    @keyframes lPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+    @keyframes lBar{to{width:100%}}
+    .navbar{position:sticky;top:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 60px;height:68px;transition:background .3s,border-color .3s}
+    .nav-logo img{height:42px;object-fit:contain}
+    .nav-links{list-style:none;display:flex;gap:8px;align-items:center}
+    .nav-links a{text-decoration:none;color:var(--text2);font-size:.9rem;font-weight:500;padding:7px 14px;border-radius:8px;transition:all var(--transition)}
+    .nav-links a:hover,.nav-links a.active{color:var(--primary);background:var(--primary-glow)}
+    .nav-cta{background:var(--primary)!important;color:#fff!important;font-weight:600!important}
+    .nav-cta:hover{background:var(--primary-dark)!important;transform:translateY(-1px)}
+    .nav-right{display:flex;align-items:center;gap:12px}
+    .theme-toggle{width:44px;height:24px;background:var(--border);border-radius:99px;border:none;cursor:pointer;position:relative;transition:background .3s}
+    .theme-toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:var(--primary);border-radius:50%;transition:transform .35s cubic-bezier(0.4,0,0.2,1)}
+    [data-theme="dark"] .theme-toggle::after{transform:translateX(20px)}
+    .theme-icon{font-size:.85rem;color:var(--text2)}
+    .nav-toggle{display:none;font-size:1.4rem;color:var(--primary);cursor:pointer;background:none;border:none}
+    .page-hero{padding:88px 60px 72px;text-align:center;background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+    .page-hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,var(--primary-glow) 0%,transparent 65%);border-radius:50%}
+    .page-hero-inner{position:relative;z-index:1}
+    .eyebrow{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--primary);background:var(--primary-glow);border:1px solid var(--primary);padding:5px 14px;border-radius:99px;margin-bottom:16px}
+    .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:800;color:var(--text);margin-bottom:14px;line-height:1.2}
+    .page-hero h1 span{color:var(--primary)}
+    .page-hero p{font-size:1rem;color:var(--text2);max-width:520px;margin:0 auto;line-height:1.75}
+    .service-tabs{background:var(--surface);border-bottom:1px solid var(--border);padding:0 60px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;position:sticky;top:68px;z-index:900}
+    .service-tabs::-webkit-scrollbar{display:none}
+    .stab{padding:18px 22px;font-size:.88rem;font-weight:600;color:var(--text2);text-decoration:none;border-bottom:3px solid transparent;white-space:nowrap;transition:all var(--transition);display:flex;align-items:center;gap:8px}
+    .stab:hover,.stab.active{color:var(--primary);border-bottom-color:var(--primary)}
+    .stats-strip{background:var(--primary);padding:48px 60px;display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+    .sstat{text-align:center;padding:16px;border-right:1px solid rgba(255,255,255,0.15)}
+    .sstat:last-child{border-right:none}
+    .sstat-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:800;color:#fff;line-height:1}
+    .sstat-num sup{font-size:.9rem;vertical-align:super}
+    .sstat-label{font-size:.8rem;color:rgba(255,255,255,.75);margin-top:6px}
+    .svc-section{padding:96px 60px;max-width:1200px;margin:0 auto}
+    .alt-bg{background:var(--bg2);max-width:none!important;padding-left:60px!important;padding-right:60px!important}
+    .alt-bg .svc-inner-wrap{max-width:1200px;margin:0 auto}
+    .svc-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+    .svc-inner.reverse{direction:rtl}
+    .svc-inner.reverse>*{direction:ltr}
+    .svc-visual{position:relative}
+    .svc-icon-box{width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--border);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;box-shadow:var(--shadow-lg);transition:all var(--transition)}
+    .svc-icon-box:hover{transform:translateY(-4px)}
+    .svc-icon-box i{font-size:4rem;color:var(--primary);opacity:.85}
+    .svc-icon-box span{font-size:.95rem;font-weight:600;color:var(--text2)}
+    .svc-badge{position:absolute;bottom:-16px;right:-16px;background:var(--primary);color:#fff;border-radius:12px;padding:12px 18px;font-size:.8rem;font-weight:700;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:8px}
+    .svc-content h2{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,2.5vw,2.2rem);font-weight:800;color:var(--text);margin:12px 0 16px;line-height:1.25}
+    .svc-content h2 span{color:var(--primary)}
+    .svc-content p{font-size:.95rem;color:var(--text2);line-height:1.85;margin-bottom:14px}
+    .svc-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin:20px 0 28px}
+    .svc-list li{display:flex;align-items:flex-start;gap:12px;font-size:.9rem;color:var(--text2);line-height:1.6}
+    .svc-list li i{color:var(--primary);margin-top:3px;flex-shrink:0;font-size:.85rem}
+    .btn{padding:13px 28px;border-radius:10px;font-size:.93rem;font-weight:600;text-decoration:none;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:8px;font-family:'Outfit',sans-serif;transition:all var(--transition)}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{background:var(--primary-dark);transform:translateY(-2px);box-shadow:0 8px 24px var(--primary-glow)}
+    .why-wrap{padding:96px 60px;background:var(--bg2);text-align:center}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3vw,2.5rem);font-weight:800;color:var(--text);margin-bottom:12px}
+    .section-title span{color:var(--primary)}
+    .section-sub{font-size:1rem;color:var(--text2);max-width:540px;margin:0 auto 52px;line-height:1.75}
+    .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;max-width:1200px;margin:0 auto}
+    .why-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:30px 26px;text-align:left;transition:all var(--transition)}
+    .why-card:hover{transform:translateY(-5px);border-color:var(--primary);box-shadow:var(--shadow)}
+    .why-card i{font-size:1.6rem;color:var(--primary);margin-bottom:14px;display:block}
+    .why-card h3{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:8px}
+    .why-card p{font-size:.86rem;color:var(--text2);line-height:1.7}
+    .svc-cta{padding:96px 60px;text-align:center;background:var(--primary)}
+    .svc-cta h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;color:#fff;margin-bottom:14px;max-width:640px;margin-left:auto;margin-right:auto;line-height:1.3}
+    .svc-cta h2 span{color:var(--gold)}
+    .svc-cta p{color:rgba(255,255,255,.82);margin-bottom:32px;font-size:1rem}
+    .btn-white{background:#fff;color:var(--primary);border:none}
+    .btn-white:hover{background:var(--bg2);transform:translateY(-2px)}
+    .btn-ghost{border:2px solid rgba(255,255,255,.5);color:#fff;background:transparent}
+    .btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.1);transform:translateY(-2px)}
+    .cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .footer{background:#0f172a;padding:72px 60px 36px;color:#94a3b8}
+    [data-theme="dark"] .footer{background:#060b18}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;max-width:1200px;margin:0 auto 52px}
+    .footer-brand img{height:46px;background:#fff;padding:6px 12px;border-radius:8px;margin-bottom:16px;display:block}
+    .footer-brand p{font-size:.87rem;line-height:1.8;max-width:250px}
+    .footer-social{display:flex;gap:10px;margin-top:20px}
+    .footer-social a{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:.9rem;text-decoration:none;transition:all var(--transition)}
+    .footer-social a:hover{background:var(--primary);border-color:var(--primary);color:#fff;transform:translateY(-2px)}
+    .footer-col h4{color:#f1f5f9;font-size:.9rem;font-weight:700;margin-bottom:16px}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+    .footer-col ul li a{text-decoration:none;color:#94a3b8;font-size:.85rem;transition:color var(--transition)}
+    .footer-col ul li a:hover{color:#f1f5f9}
+    .footer-contact-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;margin-bottom:10px}
+    .footer-contact-item i{color:var(--primary);margin-top:2px}
+    .footer-bottom{max-width:1200px;margin:0 auto;padding-top:26px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.8rem;color:#475569}
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.visible{opacity:1;transform:none}
+    #backTop{position:fixed;bottom:28px;right:28px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;opacity:0;transform:translateY(16px);transition:all .3s;z-index:999;box-shadow:0 4px 16px var(--primary-glow)}
+    #backTop.show{opacity:1;transform:none}
+    @media(max-width:900px){
+      .navbar,.page-hero,.service-tabs,.why-wrap,.svc-cta,.footer{padding-left:24px;padding-right:24px}
+      .nav-links{display:none;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px}
+      .nav-links.open{display:flex}
+      .nav-toggle{display:block}
+      .service-tabs{top:68px;padding:0 24px}
+      .svc-section{padding:60px 24px}
+      .alt-bg{padding-left:24px!important;padding-right:24px!important}
+      .svc-inner,.svc-inner.reverse{grid-template-columns:1fr;direction:ltr;gap:36px}
+      .svc-badge{right:10px}
+      .stats-strip{grid-template-columns:repeat(3,1fr);padding:36px 24px}
+      .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+      .footer-bottom{flex-direction:column;text-align:center}
+    }
+    @media(max-width:520px){.footer-grid{grid-template-columns:1fr}.stats-strip{grid-template-columns:repeat(2,1fr)}}
+  </style>
 </head>
 <body>
 
-  <!-- LOADING SCREEN -->
-  <div class="loader" id="loader">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
-    <div class="loader-bar">
-      <div class="loader-bar-fill"></div>
+<div id="loader">
+  <div class="loader-logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/></div>
+  <div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
+<nav class="navbar">
+  <div class="nav-logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="careers.html">Join Us</a></li>
+    <li><a href="people.html">Our People</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="theme-icon"><i class="fas fa-sun" id="themeIcon"></i></span>
+    <button class="theme-toggle" id="themeToggle"></button>
+    <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <span class="eyebrow">What We Offer</span>
+    <h1>Our <span>Services</span></h1>
+    <p>End-to-end outsourcing, women empowerment and business consulting — all crafted for growth.</p>
+  </div>
+</section>
+
+<div class="service-tabs">
+  <a href="#sales" class="stab active"><i class="fas fa-phone-alt"></i> Sales Support</a>
+  <a href="#customer" class="stab"><i class="fas fa-headset"></i> Customer Support</a>
+  <a href="#recruitment" class="stab"><i class="fas fa-user-tie"></i> Recruitment Support</a>
+  <a href="#transaction" class="stab"><i class="fas fa-chart-line"></i> Transaction Services</a>
+  <a href="#hotel" class="stab"><i class="fas fa-hotel"></i> Hotel Call Center</a>
+</div>
+
+<div class="stats-strip">
+  <div class="sstat"><div class="sstat-num"><span class="counter" data-target="10">0</span><sup>Mn+</sup></div><div class="sstat-label">Customer Connects</div></div>
+  <div class="sstat"><div class="sstat-num"><span class="counter" data-target="80">0</span><sup>+</sup></div><div class="sstat-label">B2B Client Connects</div></div>
+  <div class="sstat"><div class="sstat-num"><span class="counter" data-target="500">0</span><sup>+</sup></div><div class="sstat-label">Resources</div></div>
+  <div class="sstat"><div class="sstat-num"><span class="counter" data-target="120">0</span><sup>+</sup></div><div class="sstat-label">Assignments</div></div>
+  <div class="sstat"><div class="sstat-num"><span class="counter" data-target="35">0</span><sup>+</sup></div><div class="sstat-label">Happy Clients</div></div>
+</div>
+
+<!-- SALES SUPPORT -->
+<section class="svc-section" id="sales">
+  <div class="svc-inner reveal">
+    <div class="svc-visual">
+      <div class="svc-icon-box"><i class="fas fa-phone-alt"></i><span>Sales Support</span></div>
+      <div class="svc-badge"><i class="fas fa-check-circle"></i> Plug & Play in 1 Week</div>
+    </div>
+    <div class="svc-content">
+      <span class="eyebrow">Service 01</span>
+      <h2>Sales <span>Support</span></h2>
+      <p>Drive business growth with our expert inside sales and telecalling teams. Our trained women professionals handle the entire sales pipeline — from lead generation to deal closure.</p>
+      <p>We serve big corporates, unicorns, emerging businesses and startups with customized setups adapted as your voice and tone.</p>
+      <ul class="svc-list">
+        <li><i class="fas fa-check"></i> Inside Sales & Telecalling</li>
+        <li><i class="fas fa-check"></i> Lead Generation & Qualification</li>
+        <li><i class="fas fa-check"></i> Sales Pipeline Management</li>
+        <li><i class="fas fa-check"></i> Performance Monitoring & Reporting</li>
+        <li><i class="fas fa-check"></i> Multi-language Capability (15+ languages)</li>
+        <li><i class="fas fa-check"></i> Pan India Coverage</li>
+      </ul>
+      <a href="contact.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Enquire Now</a>
     </div>
   </div>
+</section>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="nav-logo">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
-    </div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="services.html" class="active">Services</a></li>
-      <li><a href="careers.html">Join Us</a></li>
-      <li><a href="people.html">Our People</a></li>
-      <li><a href="blog.html">Blog</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="nav-toggle" id="navToggle">
-      <i class="fas fa-bars"></i>
-    </div>
-  </nav>
-
-  <!-- PAGE HERO -->
-  <section class="page-hero">
-    <h1>Our <span>Services</span></h1>
-    <p>Everything we offer to empower women and enable businesses to grow.</p>
-  </section>
-
-  <!-- SERVICES DETAILED -->
-  <section class="services-detail">
-
-    <div class="service-detail-card">
-      <div class="service-detail-icon"><i class="fas fa-laptop-house"></i></div>
-      <div class="service-detail-content">
-        <h2>Work From Home</h2>
-        <p>We connect talented women with flexible, remote work opportunities across India. Our work from home roles include sales, customer service, telecalling, and recruitment — all designed to fit around your life.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> Flexible working hours</li>
-          <li><i class="fas fa-check"></i> Training & onboarding support</li>
-          <li><i class="fas fa-check"></i> Roles across multiple industries</li>
-          <li><i class="fas fa-check"></i> Performance-based incentives</li>
-        </ul>
-        <a href="careers.html" class="btn btn-primary">Explore Opportunities</a>
+<!-- CUSTOMER SUPPORT -->
+<div class="alt-bg" id="customer" style="padding-top:96px;padding-bottom:96px">
+  <div class="alt-bg" style="background:none;padding:0!important">
+    <div style="max-width:1200px;margin:0 auto;padding:0 0">
+      <div class="svc-inner reverse reveal">
+        <div class="svc-visual">
+          <div class="svc-icon-box"><i class="fas fa-headset"></i><span>Customer Support</span></div>
+          <div class="svc-badge"><i class="fas fa-star"></i> 15+ Languages</div>
+        </div>
+        <div class="svc-content">
+          <span class="eyebrow">Service 02</span>
+          <h2>Customer <span>Support</span></h2>
+          <p>Deliver exceptional customer experiences across every channel. Our experienced support teams handle inbound and outbound calls, live chat, and email support with professionalism and empathy.</p>
+          <p>Our seasoned workforce understands business dynamics and strives to deliver the best of their potential for your customers.</p>
+          <ul class="svc-list">
+            <li><i class="fas fa-check"></i> Inbound & Outbound Call Handling</li>
+            <li><i class="fas fa-check"></i> Live Chat & Email Support</li>
+            <li><i class="fas fa-check"></i> Multi-channel Customer Engagement</li>
+            <li><i class="fas fa-check"></i> Complaint Resolution & Escalation</li>
+            <li><i class="fas fa-check"></i> CSAT Monitoring & Quality Assurance</li>
+            <li><i class="fas fa-check"></i> 15+ Language Support</li>
+          </ul>
+          <a href="contact.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Enquire Now</a>
+        </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="service-detail-card reverse">
-      <div class="service-detail-icon"><i class="fas fa-handshake"></i></div>
-      <div class="service-detail-content">
-        <h2>Outsourcing & Managed Services</h2>
-        <p>We provide end-to-end outsourcing solutions for businesses looking to scale efficiently. From customer support teams to back-office operations, we manage it all so you can focus on your core business.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> Dedicated managed teams</li>
-          <li><i class="fas fa-check"></i> Cost-effective solutions</li>
-          <li><i class="fas fa-check"></i> Quality assurance & reporting</li>
-          <li><i class="fas fa-check"></i> Scalable as per your needs</li>
+<!-- RECRUITMENT SUPPORT -->
+<section class="svc-section" id="recruitment">
+  <div class="svc-inner reveal">
+    <div class="svc-visual">
+      <div class="svc-icon-box"><i class="fas fa-user-tie"></i><span>Recruitment Support</span></div>
+      <div class="svc-badge"><i class="fas fa-users"></i> End-to-End Hiring</div>
+    </div>
+    <div class="svc-content">
+      <span class="eyebrow">Service 03</span>
+      <h2>Recruitment <span>Support</span></h2>
+      <p>Finding the right talent is hard. We make it effortless. Our HR experts manage full-cycle recruitment — from job posting and sourcing to screening, interviews and onboarding.</p>
+      <p>We manage client's work with passion and responsibility, ensuring quality hires that align with your company culture and goals.</p>
+      <ul class="svc-list">
+        <li><i class="fas fa-check"></i> Job Description & Posting</li>
+        <li><i class="fas fa-check"></i> Candidate Sourcing & Screening</li>
+        <li><i class="fas fa-check"></i> Interview Scheduling & Coordination</li>
+        <li><i class="fas fa-check"></i> Offer Management & Onboarding</li>
+        <li><i class="fas fa-check"></i> Workforce Management</li>
+        <li><i class="fas fa-check"></i> HR Compliance Support</li>
+      </ul>
+      <a href="contact.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Enquire Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSACTION SERVICES -->
+<div style="background:var(--bg2);padding:96px 60px" id="transaction">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="svc-inner reverse reveal">
+      <div class="svc-visual">
+        <div class="svc-icon-box"><i class="fas fa-chart-line"></i><span>Transaction Services</span></div>
+        <div class="svc-badge"><i class="fas fa-briefcase"></i> CFA Expertise</div>
+      </div>
+      <div class="svc-content">
+        <span class="eyebrow">Service 04</span>
+        <h2>Transaction <span>Services</span></h2>
+        <p>Navigate complex financial transactions with confidence. Our CFA-qualified advisors provide end-to-end support for capital raising, M&A deals, secondary equity transactions and valuations.</p>
+        <p>With experience from KPMG India and Deutsche Bank, we bring institutional-grade advisory to growing businesses.</p>
+        <ul class="svc-list">
+          <li><i class="fas fa-check"></i> Capital Raising & Fundraising Advisory</li>
+          <li><i class="fas fa-check"></i> Secondary Equity Deal Support</li>
+          <li><i class="fas fa-check"></i> Mergers & Acquisitions (M&A)</li>
+          <li><i class="fas fa-check"></i> Business Valuation</li>
+          <li><i class="fas fa-check"></i> Deal Structuring & Closure</li>
+          <li><i class="fas fa-check"></i> Investor Connect & Pitching Support</li>
         </ul>
-        <a href="contact.html" class="btn btn-primary">Get In Touch</a>
+        <a href="contact.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Enquire Now</a>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="service-detail-card">
-      <div class="service-detail-icon"><i class="fas fa-chart-line"></i></div>
-      <div class="service-detail-content">
-        <h2>Transaction Services</h2>
-        <p>We support businesses with capital raising strategies and secondary equity transactions. Our expert team guides you through every step of the deal, from structuring to closure.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> Capital raising advisory</li>
-          <li><i class="fas fa-check"></i> Secondary equity deals</li>
-          <li><i class="fas fa-check"></i> Deal structuring support</li>
-          <li><i class="fas fa-check"></i> End-to-end transaction management</li>
-        </ul>
-        <a href="contact.html" class="btn btn-primary">Talk To Us</a>
+<!-- HOTEL CALL CENTER -->
+<section class="svc-section" id="hotel">
+  <div class="svc-inner reveal">
+    <div class="svc-visual">
+      <div class="svc-icon-box"><i class="fas fa-hotel"></i><span>Hotel Call Center</span></div>
+      <div class="svc-badge"><i class="fas fa-concierge-bell"></i> Hospitality Experts</div>
+    </div>
+    <div class="svc-content">
+      <span class="eyebrow">Service 05</span>
+      <h2>Hotel Call Center <span>Services</span></h2>
+      <p>Specialized call center services designed for the hospitality industry. Our teams understand hotel operations, booking dynamics and guest expectations — maximizing reservations and guest satisfaction.</p>
+      <p>Hotels lose significant revenue from unanswered phone calls. We solve this effectively and cost-efficiently with trained hospitality professionals.</p>
+      <ul class="svc-list">
+        <li><i class="fas fa-check"></i> Reservation & Booking Management</li>
+        <li><i class="fas fa-check"></i> Guest Query Handling</li>
+        <li><i class="fas fa-check"></i> Upselling & Cross-selling</li>
+        <li><i class="fas fa-check"></i> High Phone Channel Conversion</li>
+        <li><i class="fas fa-check"></i> After-hours Coverage</li>
+        <li><i class="fas fa-check"></i> OTA & Direct Booking Support</li>
+      </ul>
+      <a href="contact.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Enquire Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<div class="why-wrap">
+  <h2 class="section-title">Why <span>TheBirbal?</span></h2>
+  <p class="section-sub">The right skill set, regional coverage and experienced workforce — all in one customized solution.</p>
+  <div class="why-grid reveal">
+    <div class="why-card"><i class="fas fa-bolt"></i><h3>Plug & Play Model</h3><p>One week is all we need to build your model up and running — zero setup hassle.</p></div>
+    <div class="why-card"><i class="fas fa-language"></i><h3>Multilingual Workforce</h3><p>15+ language capabilities to connect with customers across India and beyond.</p></div>
+    <div class="why-card"><i class="fas fa-map-marked-alt"></i><h3>Pan India Presence</h3><p>Professionals spread across every major city and Tier 2 towns of India.</p></div>
+    <div class="why-card"><i class="fas fa-sliders-h"></i><h3>Customized Solutions</h3><p>Solutions tailored as your voice and tone, adapted to your unique business needs.</p></div>
+    <div class="why-card"><i class="fas fa-rupee-sign"></i><h3>Cost Effective</h3><p>Move from fixed to variable OpEx. Save on direct and indirect costs with better outcomes.</p></div>
+    <div class="why-card"><i class="fas fa-sync-alt"></i><h3>High Agility</h3><p>Constant learning culture makes us highly agile as per the fast-changing world.</p></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="svc-cta">
+  <h2>Ready to <span>Transform Your Business?</span></h2>
+  <p>Partner with TheBirbal and experience the difference of a truly dedicated growth team.</p>
+  <div class="cta-btns">
+    <a href="contact.html" class="btn btn-white"><i class="fas fa-paper-plane"></i> Get In Touch</a>
+    <a href="careers.html" class="btn btn-ghost">Join Our Team</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/>
+      <p>Empowering women. Enabling business. Building futures across India.</p>
+      <div class="footer-social">
+        <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.instagram.com/thebirbal_wfh/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@thebirbalWFH" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
       </div>
     </div>
-
-    <div class="service-detail-card reverse">
-      <div class="service-detail-icon"><i class="fas fa-lightbulb"></i></div>
-      <div class="service-detail-content">
-        <h2>Startup Consulting</h2>
-        <p>Early-stage startup? We help you build the right strategy, connect with the right people, and grow in the right direction. From ideation to execution, we're with you every step of the way.</p>
-        <ul>
-          <li><i class="fas fa-check"></i> Business strategy & planning</li>
-          <li><i class="fas fa-check"></i> Investor connect & pitching</li>
-          <li><i class="fas fa-check"></i> Team building support</li>
-          <li><i class="fas fa-check"></i> Go-to-market strategy</li>
-        </ul>
-        <a href="contact.html" class="btn btn-primary">Start A Conversation</a>
-      </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="people.html">Our People</a></li>
+        <li><a href="careers.html">Join Us</a></li>
+        <li><a href="blog.html">Blogs</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
     </div>
-
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-logo">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#sales">Sales Support</a></li>
+        <li><a href="#customer">Customer Support</a></li>
+        <li><a href="#recruitment">Recruitment Support</a></li>
+        <li><a href="#transaction">Transaction Services</a></li>
+        <li><a href="#hotel">Hotel Call Center</a></li>
+      </ul>
     </div>
-    <p>Empowering women. Enabling business. Building futures.</p>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="careers.html">Join Us</a>
-      <a href="people.html">Our People</a>
-      <a href="blog.html">Blog</a>
-      <a href="contact.html">Contact</a>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>Delhi, India</span></div>
+      <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>info@thebirbal.com</span></div>
+      <div class="footer-contact-item"><i class="fas fa-clock"></i><span>Mon–Sat: 9AM – 6PM</span></div>
     </div>
-    <div class="footer-social">
-      <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://www.instagram.com/thebirbal_wfh/" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.youtube.com/@thebirbalWFH" target="_blank"><i class="fab fa-youtube"></i></a>
-    </div>
-    <p class="footer-copy">&copy; 2025 TheBirbal. All rights reserved.</p>
-  </footer>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 TheBirbal Consulting. All Rights Reserved.</span>
+    <span>Made with <i class="fas fa-heart" style="color:#ef4444"></i> for Women Empowerment</span>
+  </div>
+</footer>
 
-  <script src="js/main.js"></script>
+<button id="backTop"><i class="fas fa-arrow-up"></i></button>
+
+<script>
+  const loader=document.getElementById('loader');
+  if(sessionStorage.getItem('birbalLoaded')){loader.style.display='none'}else{sessionStorage.setItem('birbalLoaded','1');window.addEventListener('load',()=>setTimeout(()=>loader.classList.add('hide'),2000))}
+  const html=document.documentElement;
+  const saved=localStorage.getItem('birbalTheme')||'light';
+  html.setAttribute('data-theme',saved);
+  document.getElementById('themeIcon').className=saved==='dark'?'fas fa-moon':'fas fa-sun';
+  document.getElementById('themeToggle').addEventListener('click',()=>{const next=html.getAttribute('data-theme')==='light'?'dark':'light';html.setAttribute('data-theme',next);localStorage.setItem('birbalTheme',next);document.getElementById('themeIcon').className=next==='dark'?'fas fa-moon':'fas fa-sun'});
+  const nt=document.getElementById('navToggle'),nl=document.getElementById('navLinks');
+  nt.addEventListener('click',()=>nl.classList.toggle('open'));
+  nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nl.classList.remove('open')));
+  // Tabs active on scroll
+  const sections=['sales','customer','recruitment','transaction','hotel'];
+  const tabs=document.querySelectorAll('.stab');
+  window.addEventListener('scroll',()=>{let cur='';sections.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-130)cur=id});tabs.forEach(t=>t.classList.toggle('active',t.getAttribute('href')==='#'+cur))});
+  // Stats counter
+  const counters=document.querySelectorAll('.counter');
+  const so=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;counters.forEach(c=>{const t=+c.dataset.target,s=t/80;let cur=0;const tick=()=>{cur=Math.min(cur+s,t);c.textContent=Math.ceil(cur);if(cur<t)requestAnimationFrame(tick)};tick()});so.disconnect()})},{threshold:.5});
+  const sb=document.querySelector('.stats-strip');if(sb)so.observe(sb);
+  // Reveal
+  const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');Array.from(e.target.children).forEach((c,i)=>c.style.transitionDelay=i*.08+'s')}})},{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
+  // Back to top
+  const bt=document.getElementById('backTop');
+  window.addEventListener('scroll',()=>bt.classList.toggle('show',window.scrollY>400));
+  bt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+</script>
 </body>
 </html>
