@@ -1,269 +1,388 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Our People | TheBirbal</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    :root{--primary:#1a56db;--primary-dark:#1447c0;--primary-glow:rgba(26,86,219,0.14);--gold:#f5a623;--bg:#fff;--bg2:#f4f7fe;--bg3:#eef2fb;--surface:#fff;--border:#dde4f5;--text:#0f172a;--text2:#475569;--nav-bg:rgba(255,255,255,0.93);--shadow:0 4px 24px rgba(26,86,219,0.10);--shadow-lg:0 16px 48px rgba(26,86,219,0.14);--radius:14px;--transition:0.3s cubic-bezier(0.4,0,0.2,1)}
+    [data-theme="dark"]{--primary:#4f86f7;--primary-dark:#3b6fe0;--primary-glow:rgba(79,134,247,0.18);--gold:#f5c842;--bg:#0a0f1e;--bg2:#111827;--bg3:#1a2236;--surface:#141c2f;--border:#1e2d4a;--text:#f1f5f9;--text2:#94a3b8;--nav-bg:rgba(10,15,30,0.95);--shadow:0 4px 24px rgba(0,0,0,0.4);--shadow-lg:0 16px 48px rgba(0,0,0,0.5)}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s;overflow-x:hidden}
+    #loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s,visibility .6s}
+    #loader.hide{opacity:0;visibility:hidden}
+    .loader-logo{width:110px;height:110px;border-radius:50%;background:var(--bg2);border:3px solid var(--border);display:flex;align-items:center;justify-content:center;animation:lp 1.6s ease-in-out infinite;overflow:hidden}
+    .loader-logo img{width:80px;object-fit:contain}
+    .loader-track{width:200px;height:3px;background:var(--border);border-radius:99px;overflow:hidden}
+    .loader-fill{height:100%;width:0;background:var(--primary);border-radius:99px;animation:lb 2s ease forwards}
+    @keyframes lp{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+    @keyframes lb{to{width:100%}}
+    .navbar{position:sticky;top:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 60px;height:68px;transition:background .3s,border-color .3s}
+    .nav-logo img{height:42px;object-fit:contain}
+    .nav-links{list-style:none;display:flex;gap:8px;align-items:center}
+    .nav-links a{text-decoration:none;color:var(--text2);font-size:.9rem;font-weight:500;padding:7px 14px;border-radius:8px;transition:all var(--transition)}
+    .nav-links a:hover,.nav-links a.active{color:var(--primary);background:var(--primary-glow)}
+    .nav-cta{background:var(--primary)!important;color:#fff!important;font-weight:600!important}
+    .nav-cta:hover{background:var(--primary-dark)!important;transform:translateY(-1px)}
+    .nav-right{display:flex;align-items:center;gap:12px}
+    .theme-toggle{width:44px;height:24px;background:var(--border);border-radius:99px;border:none;cursor:pointer;position:relative;transition:background .3s}
+    .theme-toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:var(--primary);border-radius:50%;transition:transform .35s cubic-bezier(0.4,0,0.2,1)}
+    [data-theme="dark"] .theme-toggle::after{transform:translateX(20px)}
+    .theme-icon{font-size:.85rem;color:var(--text2)}
+    .nav-toggle{display:none;font-size:1.4rem;color:var(--primary);cursor:pointer;background:none;border:none}
+    .page-hero{padding:88px 60px 72px;text-align:center;background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+    .page-hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,var(--primary-glow) 0%,transparent 65%);border-radius:50%}
+    .page-hero-inner{position:relative;z-index:1}
+    .eyebrow{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--primary);background:var(--primary-glow);border:1px solid var(--primary);padding:5px 14px;border-radius:99px;margin-bottom:16px}
+    .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:800;color:var(--text);margin-bottom:14px;line-height:1.2}
+    .page-hero h1 span{color:var(--primary)}
+    .page-hero p{font-size:1rem;color:var(--text2);max-width:600px;margin:0 auto;line-height:1.75}
+
+    /* TEAM INTRO */
+    .team-intro{padding:64px 60px 0;text-align:center}
+    .team-intro p{font-size:1rem;color:var(--text2);max-width:820px;margin:0 auto;line-height:1.9}
+
+    /* SECTION */
+    .people-section{padding:80px 60px;text-align:center}
+    .people-section.alt{background:var(--bg2)}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3vw,2.5rem);font-weight:800;color:var(--text);margin-bottom:10px}
+    .section-title span{color:var(--primary)}
+    .section-sub{font-size:.95rem;color:var(--text2);max-width:520px;margin:0 auto 52px;line-height:1.75}
+
+    /* FOUNDER CARDS */
+    .founders-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;max-width:1200px;margin:0 auto}
+    .founder-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px 28px;text-align:center;transition:all var(--transition);position:relative;overflow:hidden}
+    .founder-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform var(--transition)}
+    .founder-card:hover::before{transform:scaleX(1)}
+    .founder-card:hover{transform:translateY(-7px);box-shadow:var(--shadow-lg);border-color:var(--primary)}
+    .founder-avatar{width:100px;height:100px;border-radius:50%;margin:0 auto 20px;border:3px solid var(--primary);overflow:hidden;background:var(--bg2);box-shadow:0 4px 16px var(--primary-glow)}
+    .founder-avatar img{width:100%;height:100%;object-fit:cover}
+    .founder-card h3{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:5px}
+    .founder-role{font-size:.82rem;font-weight:600;color:var(--primary);margin-bottom:14px;display:block}
+    .founder-bio{font-size:.85rem;color:var(--text2);line-height:1.75;margin-bottom:20px}
+    .founder-social{display:flex;justify-content:center;gap:10px}
+    .founder-social a{width:34px;height:34px;border-radius:8px;background:var(--bg2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:.88rem;text-decoration:none;transition:all var(--transition)}
+    .founder-social a:hover{background:var(--primary);border-color:var(--primary);color:#fff;transform:translateY(-2px)}
+
+    /* ADVISOR — centered single card */
+    .advisor-wrap{max-width:420px;margin:0 auto}
+
+    /* ASSOCIATES GRID */
+    .associates-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;max-width:1200px;margin:0 auto}
+    .assoc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px 22px;text-align:center;transition:all var(--transition)}
+    .assoc-card:hover{transform:translateY(-5px);border-color:var(--primary);box-shadow:var(--shadow)}
+    .assoc-avatar{width:72px;height:72px;border-radius:50%;margin:0 auto 16px;background:var(--primary-glow);border:2px solid var(--primary);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1.5rem}
+    .assoc-card h3{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px}
+    .assoc-role{font-size:.8rem;color:var(--primary);font-weight:600;margin-bottom:12px;display:block}
+    .assoc-quote{font-size:.84rem;color:var(--text2);line-height:1.75;font-style:italic}
+
+    /* TEAM PHOTO */
+    .team-photo-section{padding:0 60px 80px;text-align:center}
+    .team-photo-section img{width:100%;max-width:1100px;border-radius:20px;box-shadow:var(--shadow-lg);object-fit:cover}
+    .team-photo-caption{margin-top:16px;font-size:.88rem;color:var(--text2)}
+
+    /* JOIN CTA */
+    .join-cta{padding:96px 60px;text-align:center;background:var(--primary)}
+    .join-cta h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:#fff;margin-bottom:14px;line-height:1.3}
+    .join-cta h2 span{color:var(--gold)}
+    .join-cta p{color:rgba(255,255,255,.82);margin-bottom:32px;font-size:1rem;max-width:500px;margin-left:auto;margin-right:auto}
+    .btn{padding:13px 28px;border-radius:10px;font-size:.93rem;font-weight:600;text-decoration:none;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:8px;font-family:'Outfit',sans-serif;transition:all var(--transition)}
+    .btn-white{background:#fff;color:var(--primary)}
+    .btn-white:hover{background:var(--bg2);transform:translateY(-2px)}
+    .btn-ghost{border:2px solid rgba(255,255,255,.5);color:#fff;background:transparent}
+    .btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.1);transform:translateY(-2px)}
+    .join-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+    /* FOOTER */
+    .footer{background:#0f172a;padding:72px 60px 36px;color:#94a3b8}
+    [data-theme="dark"] .footer{background:#060b18}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;max-width:1200px;margin:0 auto 52px}
+    .footer-brand img{height:46px;background:#fff;padding:6px 12px;border-radius:8px;margin-bottom:16px;display:block}
+    .footer-brand p{font-size:.87rem;line-height:1.8;max-width:250px}
+    .footer-social{display:flex;gap:10px;margin-top:20px}
+    .footer-social a{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:.9rem;text-decoration:none;transition:all var(--transition)}
+    .footer-social a:hover{background:var(--primary);border-color:var(--primary);color:#fff;transform:translateY(-2px)}
+    .footer-col h4{color:#f1f5f9;font-size:.9rem;font-weight:700;margin-bottom:16px}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+    .footer-col ul li a{text-decoration:none;color:#94a3b8;font-size:.85rem;transition:color var(--transition)}
+    .footer-col ul li a:hover{color:#f1f5f9}
+    .footer-contact-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;margin-bottom:10px}
+    .footer-contact-item i{color:var(--primary);margin-top:2px}
+    .footer-bottom{max-width:1200px;margin:0 auto;padding-top:26px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.8rem;color:#475569}
+    #backTop{position:fixed;bottom:28px;right:28px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;opacity:0;transform:translateY(16px);transition:all .3s;z-index:999;box-shadow:0 4px 16px var(--primary-glow)}
+    #backTop.show{opacity:1;transform:none}
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.visible{opacity:1;transform:none}
+    @media(max-width:900px){
+      .navbar,.page-hero,.team-intro,.people-section,.team-photo-section,.join-cta,.footer{padding-left:24px;padding-right:24px}
+      .nav-links{display:none;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px}
+      .nav-links.open{display:flex}
+      .nav-toggle{display:block}
+      .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+      .footer-bottom{flex-direction:column;text-align:center}
+    }
+    @media(max-width:520px){.footer-grid{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
 
-  <!-- LOADING SCREEN -->
-  <div class="loader" id="loader">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
-    <div class="loader-bar">
-      <div class="loader-bar-fill"></div>
+<div id="loader">
+  <div class="loader-logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/></div>
+  <div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
+<nav class="navbar">
+  <div class="nav-logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="careers.html">Join Us</a></li>
+    <li><a href="people.html" class="active">Our People</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="theme-icon"><i class="fas fa-sun" id="themeIcon"></i></span>
+    <button class="theme-toggle" id="themeToggle"></button>
+    <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <span class="eyebrow">The Faces Behind TheBirbal</span>
+    <h1>Our <span>People</span></h1>
+    <p>The passionate team of seasoned professionals driving TheBirbal's mission to empower women and enable businesses every single day.</p>
+  </div>
+</section>
+
+<!-- TEAM INTRO -->
+<div class="team-intro">
+  <p>TheBirbal team is a think tank with wide experience in consumer services distribution models. Our team has acumen in building and running effective, scalable and profitable sales capabilities and distribution setups. We have deep understanding of business levers, sales and distribution, fund raising, training and development and team engagement.</p>
+</div>
+
+<!-- CORE TEAM -->
+<section class="people-section">
+  <span class="eyebrow">Leadership</span>
+  <h2 class="section-title">Core <span>Team</span></h2>
+  <p class="section-sub">The co-founders who built TheBirbal from the ground up and drive the vision every day.</p>
+  <div class="founders-grid reveal">
+
+    <div class="founder-card">
+      <div class="founder-avatar"><img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2022/05/4-1.jpg?fit=400%2C400&ssl=1" alt="Sushil Verma"/></div>
+      <h3>Sushil Verma</h3>
+      <span class="founder-role">CEO & Co-Founder</span>
+      <p class="founder-bio">20+ years in Sales & Distribution. MBA Marketing with Double Gold Medal. Certified NLP Practitioner. Pioneer in WFH platforms — scaled MakeMyTrip's setup to 1000+ women.</p>
+      <div class="founder-social">
+        <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <div class="founder-card">
+      <div class="founder-avatar"><img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2022/05/3-1.jpg?fit=400%2C400&ssl=1" alt="Jyoti Soni"/></div>
+      <h3>Jyoti Soni</h3>
+      <span class="founder-role">Co-Founder & Head — Financial Advisory</span>
+      <p class="founder-bio">CFA Charter holder with 12+ years in Corporate Advisory & Investment Banking. Previously with KPMG India and Deutsche Bank KPO. Expert in M&A and valuations.</p>
+      <div class="founder-social">
+        <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <div class="founder-card">
+      <div class="founder-avatar"><img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2022/05/1-2.jpg?fit=417%2C412&ssl=1" alt="Manju Chauhan"/></div>
+      <h3>Manju Chauhan</h3>
+      <span class="founder-role">Co-Founder & Head — People & Culture</span>
+      <p class="founder-bio">Certified Learning Professional with 15 years at SITEL and MakeMyTrip. Masters in Psychology. Passionate about employee engagement and development.</p>
+      <div class="founder-social">
+        <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <div class="founder-card">
+      <div class="founder-avatar"><img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2024/05/Surendra-new.png?fit=655%2C617&ssl=1" alt="Surendra Shukla"/></div>
+      <h3>Surendra Shukla</h3>
+      <span class="founder-role">Co-Founder & Head — Revenue & Strategy</span>
+      <p class="founder-bio">Leads revenue generation and strategic growth initiatives. Deep expertise in building scalable business models and driving sustainable profitability across sectors.</p>
+      <div class="founder-social">
+        <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <div class="founder-card">
+      <div class="founder-avatar"><img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2024/05/Vinod-new.png?fit=658%2C620&ssl=1" alt="Vinod Choudhary"/></div>
+      <h3>Vinod Choudhary</h3>
+      <span class="founder-role">Co-Founder & Head — Sales & Distribution</span>
+      <p class="founder-bio">Heads the sales and distribution division. Brings deep expertise in building and scaling distribution channels across India with a sharp focus on results.</p>
+      <div class="founder-social">
+        <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ADVISOR -->
+<section class="people-section alt">
+  <span class="eyebrow">Guidance</span>
+  <h2 class="section-title">Our <span>Advisor</span></h2>
+  <p class="section-sub">Guiding us with wisdom, experience and an incredible network.</p>
+  <div class="advisor-wrap reveal">
+    <div class="founder-card">
+      <div class="founder-avatar"><img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2022/05/5-1.jpg?fit=400%2C400&ssl=1" alt="Vikrant Pande"/></div>
+      <h3>Vikrant Pande</h3>
+      <span class="founder-role">Advisor</span>
+      <p class="founder-bio">Distinguished alumnus of IIM Bangalore. Former head of TeamLease Skills University. Advisor to CSR Funds, Adjunct Faculty at multiple universities, author and speaker at literature festivals. Expert in scaling sales and building networks.</p>
+      <div class="founder-social">
+        <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      </div>
     </div>
   </div>
+</section>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="nav-logo">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
+<!-- TEAM TOGETHER PHOTO -->
+<div class="team-photo-section">
+  <img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2024/07/thebirbal-team.jpg?fit=5005%2C3529&ssl=1" alt="TheBirbal Team Together"/>
+  <p class="team-photo-caption">The TheBirbal family — united by one mission 💙</p>
+</div>
+
+<!-- PROJECT ASSOCIATES -->
+<section class="people-section">
+  <span class="eyebrow">Our Community</span>
+  <h2 class="section-title">Project <span>Associates</span></h2>
+  <p class="section-sub">The incredible women who make it all happen every single day.</p>
+  <div class="associates-grid reveal">
+
+    <div class="assoc-card">
+      <div class="assoc-avatar"><i class="fas fa-user"></i></div>
+      <h3>Khushboo</h3>
+      <span class="assoc-role">Project Associate</span>
+      <p class="assoc-quote">"TheBirbal allows you to wear multiple hats, empowers you to take decisions and perform to the best. There is a lot of scope for career growth."</p>
     </div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="careers.html">Join Us</a></li>
-      <li><a href="people.html" class="active">Our People</a></li>
-      <li><a href="blog.html">Blog</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="nav-toggle" id="navToggle">
-      <i class="fas fa-bars"></i>
+
+    <div class="assoc-card">
+      <div class="assoc-avatar"><i class="fas fa-user"></i></div>
+      <h3>Drishti</h3>
+      <span class="assoc-role">Project Associate</span>
+      <p class="assoc-quote">"I love how much I have grown in such a short span of time. TheBirbal empowers each individual and helps us grow out of our comfort zone."</p>
     </div>
-  </nav>
 
-  <!-- PAGE HERO -->
-  <section class="page-hero">
-    <h1>Our <span>People</span></h1>
-    <p>The passionate team behind TheBirbal's mission to empower women and enable businesses.</p>
-  </section>
-
-  <!-- ABOUT TEAM -->
-  <section class="team-intro">
-    <div class="team-intro-content">
-      <p>TheBirbal team is a think tank with wide experience in consumer services distribution models. Our team has acumen in building and running effective, scalable and profitable sales capabilities and distribution setups. We have deep understanding of business levers, sales and distribution, fund raising, training and development and team engagement.</p>
+    <div class="assoc-card">
+      <div class="assoc-avatar"><i class="fas fa-user"></i></div>
+      <h3>Kanika</h3>
+      <span class="assoc-role">Project Associate</span>
+      <p class="assoc-quote">"Growth opportunities here are in abundance for those willing to learn. Profoundly experienced peers always guide in the best directions."</p>
     </div>
-  </section>
 
-  <!-- CORE TEAM — FOUNDERS -->
-  <section class="people-section">
-    <h2 class="section-title">Core <span>Team</span></h2>
-    <p class="section-subtitle">The co-founders driving TheBirbal's vision every single day.</p>
-
-    <div class="people-grid">
-
-      <div class="people-card">
-        <div class="people-avatar">
-          <img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2022/05/4-1.jpg?fit=400%2C400&ssl=1" alt="Sushil Verma" />
-        </div>
-        <h3>Sushil Verma</h3>
-        <p class="people-role">CEO & Co-Founder</p>
-        <p class="people-bio">20+ years of experience in Sales and Distribution. MBA Marketing with Double Gold Medal in Engineering. Certified NLP Practitioner. Pioneer in building Work From Home platforms — scaled MakeMyTrip's WFH setup to 1000+ women.</p>
-        <div class="people-social">
-          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
-      <div class="people-card">
-        <div class="people-avatar">
-          <img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2022/05/3-1.jpg?fit=400%2C400&ssl=1" alt="Jyoti Soni" />
-        </div>
-        <h3>Jyoti Soni</h3>
-        <p class="people-role">Co-Founder & Head — Financial Advisory</p>
-        <p class="people-bio">CFA Charter holder with 12+ years in Corporate Advisory and Investment Banking. Previously with KPMG India and Deutsche Bank KPO. Expert in fund raising, M&A, and business valuations.</p>
-        <div class="people-social">
-          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
-      <div class="people-card">
-        <div class="people-avatar">
-          <img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2022/05/1-2.jpg?fit=417%2C412&ssl=1" alt="Manju Chauhan" />
-        </div>
-        <h3>Manju Chauhan</h3>
-        <p class="people-role">Co-Founder & Head — People & Culture</p>
-        <p class="people-bio">Certified Learning Professional with 15 years of experience at SITEL and MakeMyTrip. Masters in Psychology, Diploma from ISTD, certified NLP Practitioner. Passionate about employee engagement and development.</p>
-        <div class="people-social">
-          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
-      <div class="people-card">
-        <div class="people-avatar">
-          <img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2024/05/Surendra-new.png?fit=655%2C617&ssl=1" alt="Surendra Shukla" />
-        </div>
-        <h3>Surendra Shukla</h3>
-        <p class="people-role">Co-Founder & Head — Revenue & Strategy</p>
-        <p class="people-bio">Leads revenue generation and strategic growth initiatives at TheBirbal. Deep expertise in building scalable business models and driving sustainable profitability.</p>
-        <div class="people-social">
-          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
-      <div class="people-card">
-        <div class="people-avatar">
-          <img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2024/05/Vinod-new.png?fit=658%2C620&ssl=1" alt="Vinod Choudhary" />
-        </div>
-        <h3>Vinod Choudhary</h3>
-        <p class="people-role">Co-Founder & Head — Sales & Distribution</p>
-        <p class="people-bio">Heads the sales and distribution division at TheBirbal. Brings deep expertise in building and scaling distribution channels across India with a sharp focus on results.</p>
-        <div class="people-social">
-          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
+    <div class="assoc-card">
+      <div class="assoc-avatar"><i class="fas fa-user"></i></div>
+      <h3>Heena</h3>
+      <span class="assoc-role">Project Associate</span>
+      <p class="assoc-quote">"TheBirbal is a place where you can paint your own canvas. It gives you many opportunities to excel and achieve personal and organizational goals."</p>
     </div>
-  </section>
 
-  <!-- ADVISOR -->
-  <section class="people-section alt-bg">
-    <h2 class="section-title">Our <span>Advisor</span></h2>
-    <p class="section-subtitle">Guiding us with experience and wisdom.</p>
-
-    <div class="people-grid single-center">
-
-      <div class="people-card">
-        <div class="people-avatar">
-          <img src="https://i0.wp.com/thebirbal.com/wp-content/uploads/2022/05/5-1.jpg?fit=400%2C400&ssl=1" alt="Vikrant Pande" />
-        </div>
-        <h3>Vikrant Pande</h3>
-        <p class="people-role">Advisor</p>
-        <p class="people-bio">Distinguished alumnus of IIM Bangalore. Former head of TeamLease Skills University. Advisor to CSR Funds and Adjunct Faculty at multiple universities. Author and speaker at literature festivals. Expert in building networks and scaling sales.</p>
-        <div class="people-social">
-          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
+    <div class="assoc-card">
+      <div class="assoc-avatar"><i class="fas fa-user"></i></div>
+      <h3>Savita</h3>
+      <span class="assoc-role">Project Associate</span>
+      <p class="assoc-quote">"Working with Team TheBirbal is one of the best decisions I made. It has been an amazing journey — I hope to make the team proud always."</p>
     </div>
-  </section>
 
-  <!-- PROJECT ASSOCIATES -->
-  <section class="people-section">
-    <h2 class="section-title">Project <span>Associates</span></h2>
-    <p class="section-subtitle">The amazing women who make it all happen every day.</p>
-
-    <div class="people-grid">
-
-      <div class="people-card">
-        <div class="people-avatar small">
-          <i class="fas fa-user"></i>
-        </div>
-        <h3>Khushboo</h3>
-        <p class="people-role">Project Associate</p>
-        <p class="people-bio">TheBirbal allows you to wear multiple hats, empowers you to take decisions and perform to the best. There is lot of scope for career growth.</p>
-        <div class="people-social">
-          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
-      <div class="people-card">
-        <div class="people-avatar small">
-          <i class="fas fa-user"></i>
-        </div>
-        <h3>Drishti</h3>
-        <p class="people-role">Project Associate</p>
-        <p class="people-bio">I love how much I have grown in such a short span of time. TheBirbal empowers each individual and helps us grow out of our comfort zone.</p>
-        <div class="people-social">
-          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
-      <div class="people-card">
-        <div class="people-avatar small">
-          <i class="fas fa-user"></i>
-        </div>
-        <h3>Kanika</h3>
-        <p class="people-role">Project Associate</p>
-        <p class="people-bio">Growth opportunities here are in abundance for those who are willing to learn new things and face challenges. Profoundly experienced peers always guide in the best directions.</p>
-        <div class="people-social">
-          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
-      <div class="people-card">
-        <div class="people-avatar small">
-          <i class="fas fa-user"></i>
-        </div>
-        <h3>Heena</h3>
-        <p class="people-role">Project Associate</p>
-        <p class="people-bio">TheBirbal is a place where you can paint your own canvas and write the future on your own. It gives opportunities to excel and achieve personal and organizational goals simultaneously.</p>
-        <div class="people-social">
-          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
-      <div class="people-card">
-        <div class="people-avatar small">
-          <i class="fas fa-user"></i>
-        </div>
-        <h3>Savita</h3>
-        <p class="people-role">Project Associate</p>
-        <p class="people-bio">Working with Team TheBirbal is one of the best decisions I made. It has been an amazing journey and I hope to use the skills cultivated here to make the team proud.</p>
-        <div class="people-social">
-          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
-      <div class="people-card">
-        <div class="people-avatar small">
-          <i class="fas fa-user"></i>
-        </div>
-        <h3>Manjari</h3>
-        <p class="people-role">Project Associate</p>
-        <p class="people-bio">A company that believes in women empowerment and taught me to believe in myself. It has been a wonderful journey and I look forward to contributing to the best of my potential.</p>
-        <div class="people-social">
-          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
-      <div class="people-card">
-        <div class="people-avatar small">
-          <i class="fas fa-user"></i>
-        </div>
-        <h3>Sonal</h3>
-        <p class="people-role">Project Associate</p>
-        <p class="people-bio">My favorite thing about TheBirbal is the incredible opportunity for growth. They truly value their employees and do everything to help each person reach their individual goals.</p>
-        <div class="people-social">
-          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
-      </div>
-
+    <div class="assoc-card">
+      <div class="assoc-avatar"><i class="fas fa-user"></i></div>
+      <h3>Manjari</h3>
+      <span class="assoc-role">Project Associate</span>
+      <p class="assoc-quote">"A company that believes in women empowerment and taught me to believe in myself. It has been a wonderful journey full of learning."</p>
     </div>
-  </section>
 
-  <!-- JOIN CTA -->
-  <section class="join-cta">
-    <h2>Want to be part of our team?</h2>
-    <p>We're always looking for passionate people who believe in our mission.</p>
-    <a href="contact.html" class="btn btn-primary">Get In Touch</a>
-  </section>
+    <div class="assoc-card">
+      <div class="assoc-avatar"><i class="fas fa-user"></i></div>
+      <h3>Sonal</h3>
+      <span class="assoc-role">Project Associate</span>
+      <p class="assoc-quote">"My favorite thing about TheBirbal is the incredible opportunity for growth. They truly value their employees and help each person reach their individual goals."</p>
+    </div>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-logo">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
-    </div>
-    <p>Empowering women. Enabling business. Building futures.</p>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="careers.html">Join Us</a>
-      <a href="people.html">Our People</a>
-      <a href="blog.html">Blog</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <div class="footer-social">
-      <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://www.instagram.com/thebirbal_wfh/" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.youtube.com/@thebirbalWFH" target="_blank"><i class="fab fa-youtube"></i></a>
-    </div>
-    <p class="footer-copy">&copy; 2025 TheBirbal. All rights reserved.</p>
-  </footer>
+  </div>
+</section>
 
-  <script src="js/main.js"></script>
+<!-- JOIN CTA -->
+<section class="join-cta">
+  <h2>Want to Be Part of Our <span>Team?</span></h2>
+  <p>We're always looking for passionate people who believe in our mission to empower women and enable businesses.</p>
+  <div class="join-btns">
+    <a href="careers.html" class="btn btn-white"><i class="fas fa-briefcase"></i> View Openings</a>
+    <a href="contact.html" class="btn btn-ghost">Get In Touch</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/>
+      <p>Empowering women. Enabling business. Building futures across India.</p>
+      <div class="footer-social">
+        <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.instagram.com/thebirbal_wfh/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@thebirbalWFH" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="people.html">Our People</a></li>
+        <li><a href="careers.html">Join Us</a></li>
+        <li><a href="blog.html">Blogs</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html#sales">Sales Support</a></li>
+        <li><a href="services.html#customer">Customer Support</a></li>
+        <li><a href="services.html#recruitment">Recruitment Support</a></li>
+        <li><a href="services.html#transaction">Transaction Services</a></li>
+        <li><a href="services.html#hotel">Hotel Call Center</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>Delhi, India</span></div>
+      <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>info@thebirbal.com</span></div>
+      <div class="footer-contact-item"><i class="fas fa-clock"></i><span>Mon–Sat: 9AM – 6PM</span></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 TheBirbal Consulting. All Rights Reserved.</span>
+    <span>Made with <i class="fas fa-heart" style="color:#ef4444"></i> for Women Empowerment</span>
+  </div>
+</footer>
+
+<button id="backTop"><i class="fas fa-arrow-up"></i></button>
+
+<script>
+  const loader=document.getElementById('loader');
+  if(sessionStorage.getItem('birbalLoaded')){loader.style.display='none'}else{sessionStorage.setItem('birbalLoaded','1');window.addEventListener('load',()=>setTimeout(()=>loader.classList.add('hide'),2000))}
+  const html=document.documentElement;
+  const saved=localStorage.getItem('birbalTheme')||'light';
+  html.setAttribute('data-theme',saved);
+  document.getElementById('themeIcon').className=saved==='dark'?'fas fa-moon':'fas fa-sun';
+  document.getElementById('themeToggle').addEventListener('click',()=>{const next=html.getAttribute('data-theme')==='light'?'dark':'light';html.setAttribute('data-theme',next);localStorage.setItem('birbalTheme',next);document.getElementById('themeIcon').className=next==='dark'?'fas fa-moon':'fas fa-sun'});
+  const nt=document.getElementById('navToggle'),nl=document.getElementById('navLinks');
+  nt.addEventListener('click',()=>nl.classList.toggle('open'));
+  nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nl.classList.remove('open')));
+  const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');Array.from(e.target.children).forEach((c,i)=>c.style.transitionDelay=i*.07+'s')}})},{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
+  const bt=document.getElementById('backTop');
+  window.addEventListener('scroll',()=>bt.classList.toggle('show',window.scrollY>400));
+  bt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+</script>
 </body>
 </html>
