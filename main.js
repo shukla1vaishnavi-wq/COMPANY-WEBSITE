@@ -1,12 +1,20 @@
-// ===== LOADING SCREEN =====
+// ===== LOADING SCREEN — SIRF EK BAAR =====
 const loader = document.getElementById('loader');
 
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    loader.classList.add('hide');
-  }, 2000);
-});
+if (loader) {
+  const hasLoaded = sessionStorage.getItem('hasLoaded');
 
+  if (hasLoaded) {
+    loader.style.display = 'none';
+  } else {
+    sessionStorage.setItem('hasLoaded', 'true');
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loader.classList.add('hide');
+      }, 2000);
+    });
+  }
+}
 
 // ===== MOBILE NAVBAR TOGGLE =====
 const navToggle = document.getElementById('navToggle');
