@@ -1,11 +1,14 @@
 // ===== LOADING SCREEN =====
+const loader = document.getElementById('loader');
+
 window.addEventListener('load', () => {
   setTimeout(() => {
-    document.getElementById('loader').classList.add('hide');
-  }, 1800);
+    loader.classList.add('hide');
+  }, 2000);
 });
 
-// ===== MOBILE NAVBAR =====
+
+// ===== MOBILE NAVBAR TOGGLE =====
 const navToggle = document.getElementById('navToggle');
 const navLinks = document.querySelector('.nav-links');
 
@@ -15,13 +18,15 @@ if (navToggle) {
   });
 }
 
+// Close navbar when a link is clicked
 document.querySelectorAll('.nav-links a').forEach(link => {
   link.addEventListener('click', () => {
     navLinks.classList.remove('open');
   });
 });
 
-// ===== STATS COUNTER =====
+
+// ===== STATS COUNTER ANIMATION =====
 const counters = document.querySelectorAll('.counter');
 
 if (counters.length > 0) {
@@ -29,6 +34,7 @@ if (counters.length > 0) {
     const target = +counter.getAttribute('data-target');
     const increment = target / 120;
     let current = 0;
+
     const update = () => {
       current += increment;
       if (current < target) {
@@ -42,6 +48,7 @@ if (counters.length > 0) {
   };
 
   const statsSection = document.querySelector('.stats');
+
   if (statsSection) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -51,9 +58,11 @@ if (counters.length > 0) {
         }
       });
     }, { threshold: 0.5 });
+
     observer.observe(statsSection);
   }
 }
+
 
 // ===== JOB SEARCH & FILTER =====
 const jobSearch = document.getElementById('jobSearch');
@@ -76,13 +85,18 @@ function filterJobs() {
     const matchType = typeVal === 'all' || cardType === typeVal;
     const matchCategory = categoryVal === 'all' || cardCategory === categoryVal;
 
-    card.style.display = (matchSearch && matchType && matchCategory) ? 'block' : 'none';
+    if (matchSearch && matchType && matchCategory) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
   });
 }
 
 if (jobSearch) jobSearch.addEventListener('input', filterJobs);
 if (jobType) jobType.addEventListener('change', filterJobs);
 if (jobCategory) jobCategory.addEventListener('change', filterJobs);
+
 
 // ===== BLOG TAG FILTER =====
 const tagBtns = document.querySelectorAll('.tag-btn');
@@ -92,12 +106,19 @@ tagBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     tagBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+
     const tag = btn.getAttribute('data-tag');
+
     blogCards.forEach(card => {
-      card.style.display = (tag === 'all' || card.getAttribute('data-tag') === tag) ? 'block' : 'none';
+      if (tag === 'all' || card.getAttribute('data-tag') === tag) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
     });
   });
 });
+
 
 // ===== CONTACT FORM =====
 const contactForm = document.getElementById('contactForm');
@@ -106,6 +127,7 @@ const formSuccess = document.getElementById('formSuccess');
 if (contactForm) {
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
+
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
     const message = document.getElementById('message').value.trim();
@@ -113,12 +135,16 @@ if (contactForm) {
     if (name && email && message) {
       formSuccess.classList.add('show');
       contactForm.reset();
-      setTimeout(() => formSuccess.classList.remove('show'), 5000);
+
+      setTimeout(() => {
+        formSuccess.classList.remove('show');
+      }, 5000);
     }
   });
 }
 
-// ===== NEWSLETTER =====
+
+// ===== NEWSLETTER FORM =====
 const newsletterBtn = document.querySelector('.newsletter-form .btn');
 const newsletterInput = document.querySelector('.newsletter-form input');
 
@@ -127,7 +153,7 @@ if (newsletterBtn) {
     const email = newsletterInput.value.trim();
     if (email && email.includes('@')) {
       newsletterBtn.innerText = '✓ Subscribed!';
-      newsletterBtn.style.backgroundColor = '#059669';
+      newsletterBtn.style.backgroundColor = '#4caf50';
       newsletterInput.value = '';
       setTimeout(() => {
         newsletterBtn.innerText = 'Subscribe';
@@ -135,37 +161,56 @@ if (newsletterBtn) {
       }, 3000);
     } else {
       newsletterInput.style.borderColor = 'red';
-      setTimeout(() => { newsletterInput.style.borderColor = ''; }, 2000);
+      setTimeout(() => {
+        newsletterInput.style.borderColor = '';
+      }, 2000);
     }
   });
 }
 
-// ===== BACK TO TOP =====
+
+// ===== BACK TO TOP BUTTON =====
 const backToTop = document.createElement('div');
 backToTop.innerHTML = '<i class="fas fa-arrow-up"></i>';
 backToTop.style.cssText = `
-  position: fixed; bottom: 28px; right: 28px;
-  width: 44px; height: 44px;
-  background-color: #1a56db; color: white;
-  border-radius: 50%; display: flex;
-  align-items: center; justify-content: center;
-  font-size: 1rem; cursor: pointer;
-  opacity: 0; transition: opacity 0.3s, transform 0.3s;
-  z-index: 999; box-shadow: 0 4px 14px rgba(26,86,219,0.35);
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 45px;
+  height: 45px;
+  background-color: #1a56db;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 999;
+  box-shadow: 0 4px 15px rgba(26,86,219,0.3);
 `;
 document.body.appendChild(backToTop);
 
 window.addEventListener('scroll', () => {
-  backToTop.style.opacity = window.scrollY > 400 ? '1' : '0';
+  if (window.scrollY > 400) {
+    backToTop.style.opacity = '1';
+    backToTop.style.transform = 'translateY(0)';
+  } else {
+    backToTop.style.opacity = '0';
+    backToTop.style.transform = 'translateY(10px)';
+  }
 });
 
 backToTop.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+
 // ===== SCROLL ANIMATIONS =====
-const animateEls = document.querySelectorAll(
-  '.service-card, .job-card, .people-card, .blog-card, .service-detail-card, .contact-info-card, .why-card, .stat-card'
+const animateElements = document.querySelectorAll(
+  '.service-card, .job-card, .people-card, .blog-card, .service-detail-card, .contact-info-card, .why-card, .testimonial-card'
 );
 
 const scrollObserver = new IntersectionObserver((entries) => {
@@ -177,9 +222,9 @@ const scrollObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-animateEls.forEach(el => {
+animateElements.forEach(el => {
   el.style.opacity = '0';
-  el.style.transform = 'translateY(25px)';
-  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  el.style.transform = 'translateY(30px)';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
   scrollObserver.observe(el);
 });
