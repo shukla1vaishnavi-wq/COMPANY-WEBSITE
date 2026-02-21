@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>From Homemaker to Earner | TheBirbal Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    :root{--primary:#1a56db;--primary-dark:#1447c0;--primary-glow:rgba(26,86,219,0.14);--gold:#f5a623;--bg:#fff;--bg2:#f4f7fe;--bg3:#eef2fb;--surface:#fff;--border:#dde4f5;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--nav-bg:rgba(255,255,255,0.93);--shadow:0 4px 24px rgba(26,86,219,0.10);--shadow-lg:0 16px 48px rgba(26,86,219,0.14);--radius:14px;--transition:0.3s cubic-bezier(0.4,0,0.2,1)}
+    [data-theme="dark"]{--primary:#4f86f7;--primary-dark:#3b6fe0;--primary-glow:rgba(79,134,247,0.18);--gold:#f5c842;--bg:#0a0f1e;--bg2:#111827;--bg3:#1a2236;--surface:#141c2f;--border:#1e2d4a;--text:#f1f5f9;--text2:#94a3b8;--nav-bg:rgba(10,15,30,0.95)}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    #loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s,visibility .6s}
+    #loader.hide{opacity:0;visibility:hidden}
+    .loader-logo{width:110px;height:110px;border-radius:50%;background:var(--bg2);border:3px solid var(--border);display:flex;align-items:center;justify-content:center;animation:lp 1.6s ease-in-out infinite;overflow:hidden}
+    .loader-logo img{width:80px;object-fit:contain}
+    .loader-track{width:200px;height:3px;background:var(--border);border-radius:99px;overflow:hidden}
+    .loader-fill{height:100%;width:0;background:var(--primary);border-radius:99px;animation:lb 2s ease forwards}
+    @keyframes lp{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+    @keyframes lb{to{width:100%}}
+    .navbar{position:sticky;top:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 60px;height:68px}
+    .nav-logo img{height:42px;object-fit:contain}
+    .nav-links{list-style:none;display:flex;gap:8px;align-items:center}
+    .nav-links a{text-decoration:none;color:var(--text2);font-size:.9rem;font-weight:500;padding:7px 14px;border-radius:8px;transition:all var(--transition)}
+    .nav-links a:hover,.nav-links a.active{color:var(--primary);background:var(--primary-glow)}
+    .nav-cta{background:var(--primary)!important;color:#fff!important;font-weight:600!important}
+    .nav-right{display:flex;align-items:center;gap:12px}
+    .theme-toggle{width:44px;height:24px;background:var(--border);border-radius:99px;border:none;cursor:pointer;position:relative}
+    .theme-toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:var(--primary);border-radius:50%;transition:transform .35s}
+    [data-theme="dark"] .theme-toggle::after{transform:translateX(20px)}
+    .theme-icon{font-size:.85rem;color:var(--text2)}
+    .nav-toggle{display:none;font-size:1.4rem;color:var(--primary);cursor:pointer;background:none;border:none}
+    #readProgress{position:fixed;top:68px;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--primary),var(--gold));z-index:999}
+    .breadcrumb{padding:16px 60px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--text3)}
+    .breadcrumb a{text-decoration:none;color:var(--text2);transition:color var(--transition)}
+    .breadcrumb a:hover{color:var(--primary)}
+    .breadcrumb i{font-size:.7rem}
+    .post-hero{padding:64px 60px 52px;background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border-bottom:1px solid var(--border)}
+    .post-hero-inner{max-width:820px}
+    .post-meta{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+    .blog-tag{font-size:.73rem;color:var(--primary);font-weight:700;background:var(--primary-glow);padding:5px 14px;border-radius:99px;border:1px solid var(--primary)}
+    .meta-item{font-size:.8rem;color:var(--text3);display:flex;align-items:center;gap:5px}
+    .post-hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3.5vw,2.8rem);font-weight:800;color:var(--text);line-height:1.25;margin-bottom:18px}
+    .post-hero .lead{font-size:1.05rem;color:var(--text2);line-height:1.8;margin-bottom:28px;max-width:700px}
+    .post-author{display:flex;align-items:center;gap:14px}
+    .author-avatar{width:46px;height:46px;border-radius:50%;background:var(--primary-glow);border:2px solid var(--primary);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1rem;flex-shrink:0}
+    .author-name{font-size:.93rem;font-weight:700;color:var(--text)}
+    .author-date{font-size:.78rem;color:var(--text3)}
+    .post-layout{display:grid;grid-template-columns:1fr 340px;gap:52px;max-width:1200px;margin:0 auto;padding:60px 60px}
+    .post-body p{font-size:.97rem;color:var(--text2);line-height:1.95;margin-bottom:20px}
+    .post-body h2{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:800;color:var(--text);margin:40px 0 16px;padding-bottom:10px;border-bottom:2px solid var(--border)}
+    .post-lead{font-size:1.05rem!important;font-weight:500;color:var(--text)!important;border-left:4px solid var(--primary);padding-left:20px;margin-bottom:28px!important;line-height:1.8!important}
+    .story-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin:24px 0;border-left:4px solid var(--gold)}
+    .story-card .story-name{font-size:.88rem;font-weight:700;color:var(--primary);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+    .story-card p{font-size:.9rem!important;color:var(--text2)!important;font-style:italic;margin-bottom:0!important;line-height:1.75!important}
+    .post-img{width:100%;border-radius:14px;margin:28px 0;box-shadow:var(--shadow-lg);aspect-ratio:16/9;object-fit:cover}
+    .highlight-box{background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--border);border-radius:12px;padding:24px 28px;margin:28px 0;text-align:center}
+    .highlight-box p{font-size:1.05rem!important;font-weight:600;color:var(--text)!important;font-style:italic;margin:0!important}
+    .post-cta{background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:16px;padding:36px;text-align:center;margin-top:44px}
+    .post-cta h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:800;color:#fff;margin-bottom:10px}
+    .post-cta p{color:rgba(255,255,255,.85);font-size:.92rem;margin-bottom:22px;line-height:1.7}
+    .btn{padding:12px 26px;border-radius:10px;font-size:.92rem;font-weight:700;text-decoration:none;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:8px;font-family:'Outfit',sans-serif;transition:all var(--transition)}
+    .btn-white{background:#fff;color:var(--primary)}
+    .btn-white:hover{background:var(--bg2);transform:translateY(-2px)}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{background:var(--primary-dark);transform:translateY(-2px)}
+    .share-section{margin-top:40px;padding-top:28px;border-top:1px solid var(--border);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .share-label{font-size:.88rem;font-weight:700;color:var(--text)}
+    .share-btn{width:38px;height:38px;border-radius:9px;border:1px solid var(--border);background:var(--bg2);display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:.95rem;text-decoration:none;transition:all var(--transition);cursor:pointer}
+    .share-btn:hover{background:var(--primary);border-color:var(--primary);color:#fff;transform:translateY(-2px)}
+    .sidebar{display:flex;flex-direction:column;gap:24px}
+    .sidebar-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+    .sidebar-card h4{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}
+    .sidebar-card h4 i{color:var(--primary);font-size:.85rem}
+    .sidebar-posts{list-style:none;display:flex;flex-direction:column;gap:14px}
+    .sidebar-posts li a{text-decoration:none;display:flex;gap:10px;align-items:flex-start}
+    .sidebar-posts li a:hover .sp-title{color:var(--primary)}
+    .sp-icon{width:36px;height:36px;border-radius:8px;background:var(--primary-glow);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:.85rem;flex-shrink:0}
+    .sp-title{font-size:.85rem;font-weight:500;color:var(--text2);line-height:1.5;transition:color var(--transition)}
+    .sp-date{font-size:.75rem;color:var(--text3);margin-top:3px}
+    .sidebar-tags{display:flex;flex-wrap:wrap;gap:8px}
+    .sidebar-tags a{font-size:.75rem;color:var(--primary);font-weight:600;background:var(--primary-glow);padding:5px 12px;border-radius:99px;border:1px solid var(--primary);text-decoration:none;transition:all var(--transition)}
+    .sidebar-tags a:hover{background:var(--primary);color:#fff}
+    .sidebar-cta{text-align:center}
+    .sidebar-cta p{font-size:.87rem;color:var(--text2);margin-bottom:16px;line-height:1.7}
+    .sidebar-cta .btn-primary{width:100%;justify-content:center;font-size:.88rem;padding:12px}
+    .back-bar{max-width:1200px;margin:0 auto;padding:0 60px 56px}
+    .back-link{display:inline-flex;align-items:center;gap:8px;color:var(--primary);font-size:.92rem;font-weight:700;text-decoration:none;transition:gap var(--transition)}
+    .back-link:hover{gap:14px}
+    .related-section{padding:72px 60px;background:var(--bg2);border-top:1px solid var(--border)}
+    .related-section h2{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:800;color:var(--text);margin-bottom:36px;max-width:1200px;margin-left:auto;margin-right:auto}
+    .related-section h2 span{color:var(--primary)}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;max-width:1200px;margin:0 auto}
+    .related-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all var(--transition);text-decoration:none;display:flex;flex-direction:column}
+    .related-card:hover{transform:translateY(-5px);border-color:var(--primary);box-shadow:var(--shadow-lg)}
+    .related-thumb img{width:100%;height:140px;object-fit:cover}
+    .related-body{padding:22px;flex:1}
+    .related-body .blog-tag{margin-bottom:10px;display:inline-block}
+    .related-body h3{font-size:.95rem;font-weight:700;color:var(--text);line-height:1.5;margin-bottom:8px}
+    .related-body p{font-size:.84rem;color:var(--text2);line-height:1.7}
+    .footer{background:#0f172a;padding:40px 60px 28px;color:#94a3b8}
+    .footer-simple{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:20px}
+    .footer-simple img{height:40px;background:#fff;padding:5px 10px;border-radius:7px}
+    .footer-simple-links{display:flex;gap:20px;flex-wrap:wrap}
+    .footer-simple-links a{text-decoration:none;color:#94a3b8;font-size:.85rem;transition:color var(--transition)}
+    .footer-simple-links a:hover{color:#fff}
+    .footer-social-sm{display:flex;gap:10px}
+    .footer-social-sm a{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:.85rem;text-decoration:none;transition:all var(--transition)}
+    .footer-social-sm a:hover{background:var(--primary);color:#fff}
+    .footer-bottom{max-width:1200px;margin:22px auto 0;padding-top:22px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.8rem;color:#475569}
+    #backTop{position:fixed;bottom:28px;right:28px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;opacity:0;transform:translateY(16px);transition:all .3s;z-index:999;box-shadow:0 4px 16px var(--primary-glow)}
+    #backTop.show{opacity:1;transform:none}
+    @media(max-width:900px){
+      .navbar,.breadcrumb,.post-hero,.back-bar,.related-section,.footer{padding-left:24px;padding-right:24px}
+      .nav-links{display:none;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px}
+      .nav-links.open{display:flex}
+      .nav-toggle{display:block}
+      .post-layout{grid-template-columns:1fr;padding:40px 24px;gap:36px}
+      .post-hero{padding:50px 24px 35px}
+    }
+  </style>
+</head>
+<body>
+<div id="readProgress"></div>
+<div id="loader">
+  <div class="loader-logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/></div>
+  <div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+<nav class="navbar">
+  <div class="nav-logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="careers.html">Join Us</a></li>
+    <li><a href="people.html">Our People</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="theme-icon"><i class="fas fa-sun" id="themeIcon"></i></span>
+    <button class="theme-toggle" id="themeToggle"></button>
+    <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+<div class="breadcrumb">
+  <a href="index.html">Home</a><i class="fas fa-chevron-right"></i>
+  <a href="blog.html">Blog</a><i class="fas fa-chevron-right"></i>
+  <span>From Homemaker to Earner</span>
+</div>
+<section class="post-hero">
+  <div class="post-hero-inner">
+    <div class="post-meta">
+      <span class="blog-tag">Women Empowerment</span>
+      <span class="meta-item"><i class="fas fa-calendar"></i> February 18, 2025</span>
+      <span class="meta-item"><i class="fas fa-clock"></i> 7 min read</span>
+      <span class="meta-item"><i class="fas fa-eye"></i> 4.8k views</span>
+    </div>
+    <h1>From Homemaker to Earner — Real Stories from TheBirbal Community</h1>
+    <p class="lead">Three incredible women who stepped out of their comfort zones, took a chance on themselves, and transformed their lives through work from home opportunities. Their journeys will inspire you.</p>
+    <div class="post-author">
+      <div class="author-avatar"><i class="fas fa-users"></i></div>
+      <div><div class="author-name">TheBirbal Team</div><div class="author-date">Published February 18, 2025</div></div>
+    </div>
+  </div>
+</section>
+<div class="post-layout">
+  <article class="post-body">
+    <p class="post-lead">Every woman in our community has a story. A moment when they decided that their potential was worth more than the limitations placed around them. Here are three of those stories — told in their own words.</p>
+    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80" alt="Women empowerment" class="post-img"/>
+
+    <h2>Story 1 — Kavita, 34, Patna</h2>
+    <p>Kavita had been a homemaker for 6 years after the birth of her second child. With a bachelor's degree in commerce and strong organizational skills, she always felt she had more to offer. But in Patna, opportunities for flexible work were almost nonexistent.</p>
+    <div class="story-card">
+      <div class="story-name"><i class="fas fa-quote-left"></i> Kavita's Words</div>
+      <p>"I thought my career was over the day I left my job. Six years at home, and I had almost convinced myself that I had forgotten how to work. When a friend told me about TheBirbal, I was very skeptical. But I applied anyway. Within two weeks, I was doing customer support for a travel company. Within three months, I was team lead. Today I earn more than I ever did in my old job — and I'm home for my children every day."</p>
+    </div>
+    <p>Today, Kavita manages a team of 12 women and has been felicitated twice by TheBirbal for her outstanding performance. She recently purchased her first laptop with her own earnings — something she describes as the proudest moment of her life.</p>
+
+    <h2>Story 2 — Meena, 28, Jaipur</h2>
+    <p>Meena's family was conservative. After marriage, she was expected to stop working. She had a degree in English literature and a genuine talent for communication, but the pressure to stay home was immense. Remote work gave her an escape route nobody could argue with.</p>
+    <div class="story-card">
+      <div class="story-name"><i class="fas fa-quote-left"></i> Meena's Words</div>
+      <p>"My husband's family didn't want me to work outside. But working from home? That they accepted. I started with TheBirbal doing telecalling for two hours a day. Now I do eight hours and earn ₹24,000 a month. I have my own savings account. I have confidence I never had before. My in-laws are proud of me now. Everything changed."</p>
+    </div>
+    <p>Meena has since enrolled in an online digital marketing course funded by her own earnings. She plans to eventually lead her own digital business. TheBirbal, she says, was the first door that opened.</p>
+
+    <h2>Story 3 — Anita, 41, Mumbai Suburbs</h2>
+    <p>Anita's story is different. She had a corporate career — a good one — before a health issue forced her to resign and rest at home for nearly two years. When she recovered, she was 40 and felt the job market had moved on without her. Returning to a full-time office job felt impossible.</p>
+    <div class="story-card">
+      <div class="story-name"><i class="fas fa-quote-left"></i> Anita's Words</div>
+      <p>"I had 15 years of sales experience, but after two years out of the market, nobody would hire me. TheBirbal didn't ask me about the gap. They asked me what I could do. I joined as a senior sales specialist and within weeks I was the top performer in my cohort. They saw my potential, not my pause."</p>
+    </div>
+    <p>Today, Anita trains new joiners at TheBirbal. She has fully reclaimed her career — and in many ways, surpassed where she was before her health break.</p>
+
+    <h2>What These Stories Tell Us</h2>
+    <p>Kavita, Meena and Anita are not exceptions. They represent thousands of women across India who are talented, capable and motivated — but have been held back by circumstance, geography, family expectations or life events that had nothing to do with their ability.</p>
+    <p>Remote work, when done right and with the right support, is one of the most powerful tools for women's economic empowerment that has ever existed. At TheBirbal, we're proud to be part of that story.</p>
+
+    <div class="highlight-box">
+      <p>A career break doesn't define you. What you do next does.</p>
+    </div>
+
+    <div class="post-cta">
+      <h3>What Will Your Story Be?</h3>
+      <p>Join thousands of women who are already writing their next chapter with TheBirbal. Your journey starts with one small step.</p>
+      <a href="careers.html" class="btn btn-white"><i class="fas fa-arrow-right"></i> Start My Journey</a>
+    </div>
+    <div class="share-section">
+      <span class="share-label">Share this story:</span>
+      <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https://thebirbal.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      <a class="share-btn" href="https://wa.me/?text=From+Homemaker+to+Earner+-+Real+Stories+from+TheBirbal" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      <button class="share-btn" id="copyLink"><i class="fas fa-link"></i></button>
+    </div>
+  </article>
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h4><i class="fas fa-newspaper"></i> More Articles</h4>
+      <ul class="sidebar-posts">
+        <li><a href="blog-post.html"><div class="sp-icon"><i class="fas fa-laptop-house"></i></div><div><div class="sp-title">5 Tips to Stay Productive While Working From Home</div><div class="sp-date">Jan 15, 2025</div></div></a></li>
+        <li><a href="blog-wfh-tier2.html"><div class="sp-icon"><i class="fas fa-female"></i></div><div><div class="sp-title">How Remote Work is Changing Lives in Tier 2 Cities</div><div class="sp-date">Jan 28, 2025</div></div></a></li>
+        <li><a href="blog-startup.html"><div class="sp-icon"><i class="fas fa-rocket"></i></div><div><div class="sp-title">Top 7 Mistakes Startups Make in Their First Year</div><div class="sp-date">Feb 5, 2025</div></div></a></li>
+        <li><a href="blog-outsourcing.html"><div class="sp-icon"><i class="fas fa-chart-bar"></i></div><div><div class="sp-title">Why Outsourcing is the Smartest Move</div><div class="sp-date">Feb 10, 2025</div></div></a></li>
+      </ul>
+    </div>
+    <div class="sidebar-card">
+      <h4><i class="fas fa-tags"></i> Categories</h4>
+      <div class="sidebar-tags">
+        <a href="blog.html">Work From Home</a>
+        <a href="blog.html">Business</a>
+        <a href="blog.html">Startup</a>
+        <a href="blog.html">Women Empowerment</a>
+      </div>
+    </div>
+    <div class="sidebar-card sidebar-cta">
+      <h4><i class="fas fa-heart"></i> Join Our Community</h4>
+      <p>500+ women are already writing their success stories. Ready to write yours?</p>
+      <a href="careers.html" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Join TheBirbal</a>
+    </div>
+  </aside>
+</div>
+<div class="back-bar"><a href="blog.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to All Articles</a></div>
+<section class="related-section">
+  <h2>You Might Also <span>Enjoy</span></h2>
+  <div class="related-grid">
+    <a href="blog-wfh-tier2.html" class="related-card">
+      <div class="related-thumb"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=70" alt="Tier 2 Cities"/></div>
+      <div class="related-body"><span class="blog-tag">Women Empowerment</span><h3>How Remote Work is Changing Lives in Tier 2 Cities</h3><p>The revolution is reaching every corner of India.</p></div>
+    </a>
+    <a href="blog-post.html" class="related-card">
+      <div class="related-thumb"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&q=70" alt="WFH Tips"/></div>
+      <div class="related-body"><span class="blog-tag">Work From Home</span><h3>5 Tips to Stay Productive While Working From Home</h3><p>Proven tips from 500+ women in our community.</p></div>
+    </a>
+    <a href="blog-post.html" class="related-card">
+      <div class="related-thumb"><img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&q=70" alt="Interview Tips"/></div>
+      <div class="related-body"><span class="blog-tag">Work From Home</span><h3>How to Ace Your First Work From Home Job Interview</h3><p>Land your first remote job with confidence.</p></div>
+    </a>
+  </div>
+</section>
+<footer class="footer">
+  <div class="footer-simple">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/>
+    <div class="footer-simple-links">
+      <a href="index.html">Home</a><a href="services.html">Services</a>
+      <a href="careers.html">Join Us</a><a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-social-sm">
+      <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.instagram.com/thebirbal_wfh/" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.youtube.com/@thebirbalWFH" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 TheBirbal Consulting. All Rights Reserved.</span>
+    <span>Made with <i class="fas fa-heart" style="color:#ef4444"></i> for Women Empowerment</span>
+  </div>
+</footer>
+<button id="backTop"><i class="fas fa-arrow-up"></i></button>
+<script>
+  const loader=document.getElementById('loader');
+  if(sessionStorage.getItem('birbalLoaded')){loader.style.display='none'}else{sessionStorage.setItem('birbalLoaded','1');window.addEventListener('load',()=>setTimeout(()=>loader.classList.add('hide'),2000))}
+  const html=document.documentElement;
+  const saved=localStorage.getItem('birbalTheme')||'light';
+  html.setAttribute('data-theme',saved);
+  document.getElementById('themeIcon').className=saved==='dark'?'fas fa-moon':'fas fa-sun';
+  document.getElementById('themeToggle').addEventListener('click',()=>{const next=html.getAttribute('data-theme')==='light'?'dark':'light';html.setAttribute('data-theme',next);localStorage.setItem('birbalTheme',next);document.getElementById('themeIcon').className=next==='dark'?'fas fa-moon':'fas fa-sun'});
+  const nt=document.getElementById('navToggle'),nl=document.getElementById('navLinks');
+  nt.addEventListener('click',()=>nl.classList.toggle('open'));
+  nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nl.classList.remove('open')));
+  const prog=document.getElementById('readProgress');
+  window.addEventListener('scroll',()=>{const total=Math.max(document.body.scrollHeight-window.innerHeight,1);prog.style.width=(window.scrollY/total*100)+'%'});
+  const bt=document.getElementById('backTop');
+  window.addEventListener('scroll',()=>bt.classList.toggle('show',window.scrollY>400));
+  bt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+  document.getElementById('copyLink').addEventListener('click',()=>{navigator.clipboard.writeText(window.location.href).then(()=>{const b=document.getElementById('copyLink');b.innerHTML='<i class="fas fa-check"></i>';b.style.background='var(--primary)';b.style.color='#fff';setTimeout(()=>{b.innerHTML='<i class="fas fa-link"></i>';b.style.background='';b.style.color=''},2000)})});
+</script>
+</body>
+</html>
