@@ -561,7 +561,7 @@
     }
   });
   // REVEAL
-  const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');Array.from(e.target.children).forEach((c,i)=>c.style.transitionDelay=i*.07+'s')}})},{threshold:.08});
+  const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');Array.from(e.target.children).forEach((c,i)=>c.style.transitionDelay=i*.04+'s')}})},{threshold:.08});
   document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
   // BACK TO TOP
   const bt=document.getElementById('backTop');
@@ -570,3 +570,4 @@
 </script>
 </body>
 </html>
+
