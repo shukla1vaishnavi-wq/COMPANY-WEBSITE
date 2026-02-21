@@ -3,23 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Blog | TheBirbal</title>
+  <title>Contact | TheBirbal</title>
   <link rel="stylesheet" href="css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
 
+  <!-- LOADING SCREEN -->
+  <div class="loader" id="loader">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
+    <div class="loader-bar">
+      <div class="loader-bar-fill"></div>
+    </div>
+  </div>
+
   <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="nav-logo">The<span>Birbal</span></div>
+    <div class="nav-logo">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
+    </div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="services.html">Services</a></li>
       <li><a href="careers.html">Join Us</a></li>
       <li><a href="people.html">Our People</a></li>
-      <li><a href="blog.html" class="active">Blog</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
     </ul>
     <div class="nav-toggle" id="navToggle">
       <i class="fas fa-bars"></i>
@@ -28,147 +38,142 @@
 
   <!-- PAGE HERO -->
   <section class="page-hero">
-    <h1>Our <span>Blog</span></h1>
-    <p>Insights, stories, and tips on work from home, business, and empowerment.</p>
+    <h1>Get In <span>Touch</span></h1>
+    <p>Have a question or want to work with us? We'd love to hear from you.</p>
   </section>
 
-  <!-- BLOG FILTER -->
-  <section class="blog-filter">
-    <div class="filter-tags">
-      <button class="tag-btn active" data-tag="all">All</button>
-      <button class="tag-btn" data-tag="wfh">Work From Home</button>
-      <button class="tag-btn" data-tag="business">Business</button>
-      <button class="tag-btn" data-tag="startup">Startup</button>
-      <button class="tag-btn" data-tag="women">Women Empowerment</button>
-    </div>
-  </section>
+  <!-- CONTACT SECTION -->
+  <section class="contact-section">
 
-  <!-- BLOG POSTS -->
-  <section class="blog-section">
-    <div class="blog-grid" id="blogGrid">
+    <!-- CONTACT INFO -->
+    <div class="contact-info">
 
-      <div class="blog-card" data-tag="wfh">
-        <div class="blog-image">
-          <i class="fas fa-laptop-house"></i>
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Work From Home</span>
-            <span class="blog-date"><i class="fas fa-calendar"></i> Jan 15, 2025</span>
-          </div>
-          <h3>5 Tips to Stay Productive While Working From Home</h3>
-          <p>Working from home sounds like a dream — but staying productive is a real challenge. Here are 5 proven tips that actually work for women managing home and work together.</p>
-          <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+      <div class="contact-info-card">
+        <i class="fas fa-map-marker-alt"></i>
+        <div>
+          <h4>Our Office</h4>
+          <p>Delhi, India</p>
         </div>
       </div>
 
-      <div class="blog-card" data-tag="women">
-        <div class="blog-image">
-          <i class="fas fa-female"></i>
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Women Empowerment</span>
-            <span class="blog-date"><i class="fas fa-calendar"></i> Jan 28, 2025</span>
-          </div>
-          <h3>How Remote Work is Changing Lives of Women in Tier 2 Cities</h3>
-          <p>The remote work revolution is reaching beyond metros. We look at how women in smaller cities are using work from home opportunities to build financial independence.</p>
-          <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+      <div class="contact-info-card">
+        <i class="fas fa-envelope"></i>
+        <div>
+          <h4>Email Us</h4>
+          <p>info@thebirbal.com</p>
         </div>
       </div>
 
-      <div class="blog-card" data-tag="startup">
-        <div class="blog-image">
-          <i class="fas fa-rocket"></i>
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Startup</span>
-            <span class="blog-date"><i class="fas fa-calendar"></i> Feb 5, 2025</span>
-          </div>
-          <h3>Top 7 Mistakes Startups Make in Their First Year</h3>
-          <p>Most startups fail not because of bad ideas, but because of avoidable mistakes. Our consulting team breaks down the 7 most common errors and how to avoid them.</p>
-          <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+      <div class="contact-info-card">
+        <i class="fas fa-globe"></i>
+        <div>
+          <h4>Website</h4>
+          <p>www.thebirbal.com</p>
         </div>
       </div>
 
-      <div class="blog-card" data-tag="business">
-        <div class="blog-image">
-          <i class="fas fa-chart-bar"></i>
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Business</span>
-            <span class="blog-date"><i class="fas fa-calendar"></i> Feb 10, 2025</span>
-          </div>
-          <h3>Why Outsourcing is the Smartest Move for Growing Businesses</h3>
-          <p>Scaling a business is hard. Outsourcing the right functions can save costs, improve efficiency, and let your core team focus on what matters most.</p>
-          <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+      <div class="contact-info-card">
+        <i class="fas fa-clock"></i>
+        <div>
+          <h4>Working Hours</h4>
+          <p>Mon - Sat: 9:00 AM - 6:00 PM</p>
         </div>
       </div>
 
-      <div class="blog-card" data-tag="wfh">
-        <div class="blog-image">
-          <i class="fas fa-headset"></i>
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Work From Home</span>
-            <span class="blog-date"><i class="fas fa-calendar"></i> Feb 14, 2025</span>
-          </div>
-          <h3>How to Ace Your First Work From Home Job Interview</h3>
-          <p>Your first remote job interview can feel intimidating. Here's a complete guide on how to prepare, what to wear, and what to say to land the job.</p>
-          <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-        </div>
-      </div>
-
-      <div class="blog-card" data-tag="women">
-        <div class="blog-image">
-          <i class="fas fa-hands-helping"></i>
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Women Empowerment</span>
-            <span class="blog-date"><i class="fas fa-calendar"></i> Feb 18, 2025</span>
-          </div>
-          <h3>From Homemaker to Earner — Real Stories from TheBirbal Community</h3>
-          <p>Meet three incredible women who transformed their lives through work from home opportunities. Their journeys will inspire and motivate you to take that first step.</p>
-          <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+      <div class="contact-social">
+        <p>Follow Us</p>
+        <div class="contact-social-links">
+          <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://www.instagram.com/thebirbal_wfh/" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/@thebirbalWFH" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
 
     </div>
+
+    <!-- CONTACT FORM -->
+    <div class="contact-form-wrapper">
+      <h2>Send Us a <span>Message</span></h2>
+      <form class="contact-form" id="contactForm">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="name" placeholder="e.g. Priya Sharma" required />
+          </div>
+          <div class="form-group">
+            <label>Your Email</label>
+            <input type="email" id="email" placeholder="e.g. priya@email.com" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="phone" placeholder="e.g. +91 98765 43210" />
+        </div>
+
+        <div class="form-group">
+          <label>Subject</label>
+          <select id="subject">
+            <option value="">Select a subject</option>
+            <option value="job">Looking for a Job</option>
+            <option value="hire">Looking to Hire</option>
+            <option value="consulting">Startup Consulting</option>
+            <option value="transaction">Transaction Services</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Your Message</label>
+          <textarea id="message" rows="5" placeholder="Tell us how we can help you..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          Send Message <i class="fas fa-paper-plane"></i>
+        </button>
+
+        <div class="form-success" id="formSuccess">
+          <i class="fas fa-check-circle"></i> Your message has been sent! We'll get back to you soon.
+        </div>
+
+      </form>
+    </div>
+
   </section>
 
-  <!-- NEWSLETTER -->
-  <section class="newsletter">
-    <h2>Stay <span>Updated</span></h2>
-    <p>Get our latest articles and opportunities delivered straight to your inbox.</p>
-    <div class="newsletter-form">
-      <input type="email" placeholder="Enter your email address" />
-      <button class="btn btn-primary">Subscribe</button>
-    </div>
+  <!-- MAP — Delhi -->
+  <section class="map-section">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224345.83923192776!2d76.96765893741952!3d28.527252152472645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x52c2b7494e204dce!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1706000000000!5m2!1sen!2sin"
+      width="100%"
+      height="400"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy">
+    </iframe>
   </section>
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-logo">The<span>Birbal</span></div>
-      <p>Empowering women. Enabling business. Building futures.</p>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="careers.html">Join Us</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <div class="footer-social">
-        <a href="#"><i class="fab fa-linkedin"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-facebook"></i></a>
-      </div>
-      <p class="footer-copy">&copy; 2025 TheBirbal. All rights reserved.</p>
+    <div class="footer-logo">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
     </div>
+    <p>Empowering women. Enabling business. Building futures.</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="careers.html">Join Us</a>
+      <a href="people.html">Our People</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://www.instagram.com/thebirbal_wfh/" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.youtube.com/@thebirbalWFH" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+    <p class="footer-copy">&copy; 2025 TheBirbal. All rights reserved.</p>
   </footer>
 
   <script src="js/main.js"></script>
