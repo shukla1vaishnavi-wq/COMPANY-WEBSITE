@@ -1,187 +1,390 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Blog | TheBirbal</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    :root{--primary:#1a56db;--primary-dark:#1447c0;--primary-glow:rgba(26,86,219,0.14);--gold:#f5a623;--bg:#fff;--bg2:#f4f7fe;--bg3:#eef2fb;--surface:#fff;--border:#dde4f5;--text:#0f172a;--text2:#475569;--nav-bg:rgba(255,255,255,0.93);--shadow:0 4px 24px rgba(26,86,219,0.10);--shadow-lg:0 16px 48px rgba(26,86,219,0.14);--radius:14px;--transition:0.3s cubic-bezier(0.4,0,0.2,1)}
+    [data-theme="dark"]{--primary:#4f86f7;--primary-dark:#3b6fe0;--primary-glow:rgba(79,134,247,0.18);--gold:#f5c842;--bg:#0a0f1e;--bg2:#111827;--bg3:#1a2236;--surface:#141c2f;--border:#1e2d4a;--text:#f1f5f9;--text2:#94a3b8;--nav-bg:rgba(10,15,30,0.95);--shadow:0 4px 24px rgba(0,0,0,0.4);--shadow-lg:0 16px 48px rgba(0,0,0,0.5)}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s;overflow-x:hidden}
+    #loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s,visibility .6s}
+    #loader.hide{opacity:0;visibility:hidden}
+    .loader-logo{width:110px;height:110px;border-radius:50%;background:var(--bg2);border:3px solid var(--border);display:flex;align-items:center;justify-content:center;animation:lp 1.6s ease-in-out infinite;overflow:hidden}
+    .loader-logo img{width:80px;object-fit:contain}
+    .loader-track{width:200px;height:3px;background:var(--border);border-radius:99px;overflow:hidden}
+    .loader-fill{height:100%;width:0;background:var(--primary);border-radius:99px;animation:lb 2s ease forwards}
+    @keyframes lp{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+    @keyframes lb{to{width:100%}}
+    .navbar{position:sticky;top:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 60px;height:68px;transition:background .3s,border-color .3s}
+    .nav-logo img{height:42px;object-fit:contain}
+    .nav-links{list-style:none;display:flex;gap:8px;align-items:center}
+    .nav-links a{text-decoration:none;color:var(--text2);font-size:.9rem;font-weight:500;padding:7px 14px;border-radius:8px;transition:all var(--transition)}
+    .nav-links a:hover,.nav-links a.active{color:var(--primary);background:var(--primary-glow)}
+    .nav-cta{background:var(--primary)!important;color:#fff!important;font-weight:600!important}
+    .nav-cta:hover{background:var(--primary-dark)!important;transform:translateY(-1px)}
+    .nav-right{display:flex;align-items:center;gap:12px}
+    .theme-toggle{width:44px;height:24px;background:var(--border);border-radius:99px;border:none;cursor:pointer;position:relative;transition:background .3s}
+    .theme-toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:var(--primary);border-radius:50%;transition:transform .35s cubic-bezier(0.4,0,0.2,1)}
+    [data-theme="dark"] .theme-toggle::after{transform:translateX(20px)}
+    .theme-icon{font-size:.85rem;color:var(--text2)}
+    .nav-toggle{display:none;font-size:1.4rem;color:var(--primary);cursor:pointer;background:none;border:none}
+    .page-hero{padding:88px 60px 72px;text-align:center;background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+    .page-hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,var(--primary-glow) 0%,transparent 65%);border-radius:50%}
+    .page-hero-inner{position:relative;z-index:1}
+    .eyebrow{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--primary);background:var(--primary-glow);border:1px solid var(--primary);padding:5px 14px;border-radius:99px;margin-bottom:16px}
+    .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:800;color:var(--text);margin-bottom:14px;line-height:1.2}
+    .page-hero h1 span{color:var(--primary)}
+    .page-hero p{font-size:1rem;color:var(--text2);max-width:500px;margin:0 auto;line-height:1.75}
+
+    /* FILTER */
+    .blog-filter{padding:36px 60px 0;background:var(--bg2);display:flex;justify-content:center}
+    .filter-tags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding-bottom:32px}
+    .tag-btn{padding:9px 20px;border-radius:99px;border:1.5px solid var(--border);background:var(--surface);color:var(--text2);font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:all var(--transition)}
+    .tag-btn:hover,.tag-btn.active{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:600}
+
+    /* FEATURED POST */
+    .featured-wrap{padding:48px 60px 0;background:var(--bg2)}
+    .featured-card{max-width:1200px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;display:grid;grid-template-columns:1.2fr 1fr;overflow:hidden;box-shadow:var(--shadow-lg);transition:all var(--transition)}
+    .featured-card:hover{transform:translateY(-5px);border-color:var(--primary);box-shadow:0 24px 64px rgba(26,86,219,0.16)}
+    .featured-img{background:linear-gradient(135deg,var(--bg2),var(--bg3));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:60px;border-right:1px solid var(--border)}
+    .featured-img i{font-size:5rem;color:var(--primary);opacity:.75}
+    .featured-img .feat-label{font-size:.8rem;font-weight:700;color:var(--primary);letter-spacing:2px;text-transform:uppercase}
+    .featured-body{padding:44px}
+    .feat-meta{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+    .blog-tag{font-size:.73rem;color:var(--primary);font-weight:700;background:var(--primary-glow);padding:4px 12px;border-radius:99px;border:1px solid var(--primary)}
+    .blog-date{font-size:.78rem;color:var(--text3);display:flex;align-items:center;gap:5px}
+    .blog-read-time{font-size:.78rem;color:var(--text3);display:flex;align-items:center;gap:5px}
+    .featured-body h2{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:800;color:var(--text);margin-bottom:14px;line-height:1.3}
+    .featured-body p{font-size:.92rem;color:var(--text2);line-height:1.8;margin-bottom:24px}
+    .read-more{display:inline-flex;align-items:center;gap:8px;color:var(--primary);font-size:.9rem;font-weight:700;text-decoration:none;transition:gap var(--transition)}
+    .read-more:hover{gap:14px}
+
+    /* BLOG GRID */
+    .blog-section{padding:48px 60px 80px;background:var(--bg2)}
+    .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:26px;max-width:1200px;margin:0 auto}
+    .blog-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all var(--transition);display:flex;flex-direction:column}
+    .blog-card:hover{transform:translateY(-6px);border-color:var(--primary);box-shadow:var(--shadow-lg)}
+    .blog-thumb{background:linear-gradient(135deg,var(--bg2),var(--bg3));padding:36px;text-align:center;font-size:2.8rem;color:var(--primary);border-bottom:1px solid var(--border)}
+    .blog-body{padding:24px;flex:1;display:flex;flex-direction:column}
+    .blog-meta-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px}
+    .blog-body h3{font-size:.98rem;font-weight:700;color:var(--text);margin-bottom:10px;line-height:1.5}
+    .blog-body p{font-size:.86rem;color:var(--text2);line-height:1.75;margin-bottom:18px;flex:1}
+    .no-results{text-align:center;padding:60px 20px;color:var(--text2);font-size:1rem;display:none}
+    .no-results i{font-size:2.5rem;color:var(--border);display:block;margin-bottom:14px}
+
+    /* NEWSLETTER */
+    .newsletter{padding:80px 60px;text-align:center;background:var(--primary)}
+    .newsletter h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;color:#fff;margin-bottom:12px}
+    .newsletter h2 span{color:var(--gold)}
+    .newsletter p{color:rgba(255,255,255,.82);margin-bottom:28px;font-size:1rem}
+    .nl-form{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+    .nl-form input{padding:13px 20px;border-radius:10px;border:none;background:#fff;color:var(--text);font-family:'Outfit',sans-serif;font-size:.9rem;width:300px;outline:none}
+    .nl-form button{padding:13px 26px;border-radius:10px;border:none;background:var(--gold);color:#1a1a1a;font-family:'Outfit',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;transition:all var(--transition);display:flex;align-items:center;gap:8px}
+    .nl-form button:hover{background:#f0a000;transform:translateY(-2px)}
+
+    /* FOOTER */
+    .footer{background:#0f172a;padding:72px 60px 36px;color:#94a3b8}
+    [data-theme="dark"] .footer{background:#060b18}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;max-width:1200px;margin:0 auto 52px}
+    .footer-brand img{height:46px;background:#fff;padding:6px 12px;border-radius:8px;margin-bottom:16px;display:block}
+    .footer-brand p{font-size:.87rem;line-height:1.8;max-width:250px}
+    .footer-social{display:flex;gap:10px;margin-top:20px}
+    .footer-social a{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:.9rem;text-decoration:none;transition:all var(--transition)}
+    .footer-social a:hover{background:var(--primary);border-color:var(--primary);color:#fff;transform:translateY(-2px)}
+    .footer-col h4{color:#f1f5f9;font-size:.9rem;font-weight:700;margin-bottom:16px}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+    .footer-col ul li a{text-decoration:none;color:#94a3b8;font-size:.85rem;transition:color var(--transition)}
+    .footer-col ul li a:hover{color:#f1f5f9}
+    .footer-contact-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;margin-bottom:10px}
+    .footer-contact-item i{color:var(--primary);margin-top:2px}
+    .footer-bottom{max-width:1200px;margin:0 auto;padding-top:26px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.8rem;color:#475569}
+    #backTop{position:fixed;bottom:28px;right:28px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;opacity:0;transform:translateY(16px);transition:all .3s;z-index:999;box-shadow:0 4px 16px var(--primary-glow)}
+    #backTop.show{opacity:1;transform:none}
+    @media(max-width:900px){
+      .navbar,.page-hero,.blog-filter,.featured-wrap,.blog-section,.newsletter,.footer{padding-left:24px;padding-right:24px}
+      .nav-links{display:none;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px}
+      .nav-links.open{display:flex}
+      .nav-toggle{display:block}
+      .featured-card{grid-template-columns:1fr}
+      .featured-img{border-right:none;border-bottom:1px solid var(--border);padding:36px}
+      .featured-body{padding:28px}
+      .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+      .footer-bottom{flex-direction:column;text-align:center}
+    }
+    @media(max-width:520px){.footer-grid{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
 
-  <!-- LOADING SCREEN -->
-  <div class="loader" id="loader">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
-    <div class="loader-bar">
-      <div class="loader-bar-fill"></div>
+<div id="loader">
+  <div class="loader-logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/></div>
+  <div class="loader-track"><div class="loader-fill"></div></div>
+</div>
+
+<nav class="navbar">
+  <div class="nav-logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="careers.html">Join Us</a></li>
+    <li><a href="people.html">Our People</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="theme-icon"><i class="fas fa-sun" id="themeIcon"></i></span>
+    <button class="theme-toggle" id="themeToggle"></button>
+    <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <span class="eyebrow">Insights & Stories</span>
+    <h1>Our <span>Blog</span></h1>
+    <p>Tips, stories and insights on work from home, business growth and women empowerment.</p>
+  </div>
+</section>
+
+<!-- FILTER TAGS -->
+<div class="blog-filter">
+  <div class="filter-tags">
+    <button class="tag-btn active" data-tag="all">All Posts</button>
+    <button class="tag-btn" data-tag="wfh">Work From Home</button>
+    <button class="tag-btn" data-tag="business">Business</button>
+    <button class="tag-btn" data-tag="startup">Startup</button>
+    <button class="tag-btn" data-tag="women">Women Empowerment</button>
+  </div>
+</div>
+
+<!-- FEATURED POST -->
+<div class="featured-wrap" id="featuredWrap">
+  <a href="blog-post.html" style="text-decoration:none">
+    <div class="featured-card" data-tag="wfh">
+      <div class="featured-img">
+        <i class="fas fa-laptop-house"></i>
+        <span class="feat-label">Featured Post</span>
+      </div>
+      <div class="featured-body">
+        <div class="feat-meta">
+          <span class="blog-tag">Work From Home</span>
+          <span class="blog-date"><i class="fas fa-calendar"></i> Jan 15, 2025</span>
+          <span class="blog-read-time"><i class="fas fa-clock"></i> 5 min read</span>
+        </div>
+        <h2>5 Tips to Stay Productive While Working From Home</h2>
+        <p>Working from home sounds like a dream — but staying productive is a real challenge. Here are 5 proven tips that our community of 500+ women swears by to stay focused and efficient every day.</p>
+        <span class="read-more">Read Full Article <i class="fas fa-arrow-right"></i></span>
+      </div>
+    </div>
+  </a>
+</div>
+
+<!-- BLOG GRID -->
+<section class="blog-section">
+  <div class="blog-grid" id="blogGrid">
+
+    <div class="blog-card" data-tag="women">
+      <div class="blog-thumb"><i class="fas fa-female"></i></div>
+      <div class="blog-body">
+        <div class="blog-meta-row">
+          <span class="blog-tag">Women Empowerment</span>
+          <span class="blog-date"><i class="fas fa-calendar"></i> Jan 28, 2025</span>
+        </div>
+        <h3>How Remote Work is Changing Lives of Women in Tier 2 Cities</h3>
+        <p>The remote work revolution is reaching beyond metros. We look at how women in smaller cities are using WFH opportunities to build financial independence.</p>
+        <a href="blog-post.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="blog-card" data-tag="startup">
+      <div class="blog-thumb"><i class="fas fa-rocket"></i></div>
+      <div class="blog-body">
+        <div class="blog-meta-row">
+          <span class="blog-tag">Startup</span>
+          <span class="blog-date"><i class="fas fa-calendar"></i> Feb 5, 2025</span>
+        </div>
+        <h3>Top 7 Mistakes Startups Make in Their First Year</h3>
+        <p>Most startups fail not because of bad ideas, but because of avoidable mistakes. Our consulting team breaks down the 7 most common errors.</p>
+        <a href="blog-post.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="blog-card" data-tag="business">
+      <div class="blog-thumb"><i class="fas fa-chart-bar"></i></div>
+      <div class="blog-body">
+        <div class="blog-meta-row">
+          <span class="blog-tag">Business</span>
+          <span class="blog-date"><i class="fas fa-calendar"></i> Feb 10, 2025</span>
+        </div>
+        <h3>Why Outsourcing is the Smartest Move for Growing Businesses</h3>
+        <p>Scaling a business is hard. Outsourcing the right functions can save costs, improve efficiency and let your core team focus on what matters most.</p>
+        <a href="blog-post.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="blog-card" data-tag="wfh">
+      <div class="blog-thumb"><i class="fas fa-headset"></i></div>
+      <div class="blog-body">
+        <div class="blog-meta-row">
+          <span class="blog-tag">Work From Home</span>
+          <span class="blog-date"><i class="fas fa-calendar"></i> Feb 14, 2025</span>
+        </div>
+        <h3>How to Ace Your First Work From Home Job Interview</h3>
+        <p>Your first remote job interview can feel intimidating. Here's a complete guide on how to prepare, what to wear and what to say to land the job.</p>
+        <a href="blog-post.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="blog-card" data-tag="women">
+      <div class="blog-thumb"><i class="fas fa-hands-helping"></i></div>
+      <div class="blog-body">
+        <div class="blog-meta-row">
+          <span class="blog-tag">Women Empowerment</span>
+          <span class="blog-date"><i class="fas fa-calendar"></i> Feb 18, 2025</span>
+        </div>
+        <h3>From Homemaker to Earner — Real Stories from TheBirbal Community</h3>
+        <p>Meet three incredible women who transformed their lives through work from home opportunities. Their journeys will inspire you to take that first step.</p>
+        <a href="blog-post.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="blog-card" data-tag="business">
+      <div class="blog-thumb"><i class="fas fa-bullseye"></i></div>
+      <div class="blog-body">
+        <div class="blog-meta-row">
+          <span class="blog-tag">Business</span>
+          <span class="blog-date"><i class="fas fa-calendar"></i> Mar 2, 2025</span>
+        </div>
+        <h3>The Plug & Play Model: How TheBirbal Gets Your Team Running in 1 Week</h3>
+        <p>Traditional hiring takes months. Our plug & play approach gets fully trained teams operational within 7 days — here's exactly how it works.</p>
+        <a href="blog-post.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+  </div>
+  <div class="no-results" id="noResults">
+    <i class="fas fa-search"></i>
+    No posts found for this category. Try a different filter!
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <h2>Stay <span>Updated</span></h2>
+  <p>Get our latest articles and job opportunities delivered straight to your inbox.</p>
+  <div class="nl-form">
+    <input type="email" id="nlEmail" placeholder="Enter your email address"/>
+    <button id="nlBtn"><i class="fas fa-paper-plane"></i> Subscribe</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/>
+      <p>Empowering women. Enabling business. Building futures across India.</p>
+      <div class="footer-social">
+        <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.instagram.com/thebirbal_wfh/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@thebirbalWFH" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="people.html">Our People</a></li>
+        <li><a href="careers.html">Join Us</a></li>
+        <li><a href="blog.html">Blogs</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html#sales">Sales Support</a></li>
+        <li><a href="services.html#customer">Customer Support</a></li>
+        <li><a href="services.html#recruitment">Recruitment Support</a></li>
+        <li><a href="services.html#transaction">Transaction Services</a></li>
+        <li><a href="services.html#hotel">Hotel Call Center</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>Delhi, India</span></div>
+      <div class="footer-contact-item"><i class="fas fa-envelope"></i><span>info@thebirbal.com</span></div>
+      <div class="footer-contact-item"><i class="fas fa-clock"></i><span>Mon–Sat: 9AM – 6PM</span></div>
     </div>
   </div>
+  <div class="footer-bottom">
+    <span>© 2026 TheBirbal Consulting. All Rights Reserved.</span>
+    <span>Made with <i class="fas fa-heart" style="color:#ef4444"></i> for Women Empowerment</span>
+  </div>
+</footer>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="nav-logo">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
-    </div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="careers.html">Join Us</a></li>
-      <li><a href="people.html">Our People</a></li>
-      <li><a href="blog.html" class="active">Blog</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="nav-toggle" id="navToggle">
-      <i class="fas fa-bars"></i>
-    </div>
-  </nav>
+<button id="backTop"><i class="fas fa-arrow-up"></i></button>
 
-  <!-- PAGE HERO -->
-  <section class="page-hero">
-    <h1>Our <span>Blog</span></h1>
-    <p>Insights, stories, and tips on work from home, business, and empowerment.</p>
-  </section>
-
-  <!-- BLOG FILTER -->
-  <section class="blog-filter">
-    <div class="filter-tags">
-      <button class="tag-btn active" data-tag="all">All</button>
-      <button class="tag-btn" data-tag="wfh">Work From Home</button>
-      <button class="tag-btn" data-tag="business">Business</button>
-      <button class="tag-btn" data-tag="startup">Startup</button>
-      <button class="tag-btn" data-tag="women">Women Empowerment</button>
-    </div>
-  </section>
-
-  <!-- BLOG POSTS -->
-  <section class="blog-section">
-    <div class="blog-grid" id="blogGrid">
-
-      <div class="blog-card" data-tag="wfh">
-        <div class="blog-image">
-          <i class="fas fa-laptop-house"></i>
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Work From Home</span>
-            <span class="blog-date"><i class="fas fa-calendar"></i> Jan 15, 2025</span>
-          </div>
-          <h3>5 Tips to Stay Productive While Working From Home</h3>
-          <p>Working from home sounds like a dream — but staying productive is a real challenge. Here are 5 proven tips that actually work for women managing home and work together.</p>
-          <a href="blog-post.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-        </div>
-      </div>
-
-      <div class="blog-card" data-tag="women">
-        <div class="blog-image">
-          <i class="fas fa-female"></i>
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Women Empowerment</span>
-            <span class="blog-date"><i class="fas fa-calendar"></i> Jan 28, 2025</span>
-          </div>
-          <h3>How Remote Work is Changing Lives of Women in Tier 2 Cities</h3>
-          <p>The remote work revolution is reaching beyond metros. We look at how women in smaller cities are using work from home opportunities to build financial independence.</p>
-          <a href="blog-post.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-        </div>
-      </div>
-
-      <div class="blog-card" data-tag="startup">
-        <div class="blog-image">
-          <i class="fas fa-rocket"></i>
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Startup</span>
-            <span class="blog-date"><i class="fas fa-calendar"></i> Feb 5, 2025</span>
-          </div>
-          <h3>Top 7 Mistakes Startups Make in Their First Year</h3>
-          <p>Most startups fail not because of bad ideas, but because of avoidable mistakes. Our consulting team breaks down the 7 most common errors and how to avoid them.</p>
-          <a href="blog-post.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-        </div>
-      </div>
-
-      <div class="blog-card" data-tag="business">
-        <div class="blog-image">
-          <i class="fas fa-chart-bar"></i>
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Business</span>
-            <span class="blog-date"><i class="fas fa-calendar"></i> Feb 10, 2025</span>
-          </div>
-          <h3>Why Outsourcing is the Smartest Move for Growing Businesses</h3>
-          <p>Scaling a business is hard. Outsourcing the right functions can save costs, improve efficiency, and let your core team focus on what matters most.</p>
-          <a href="blog-post.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-        </div>
-      </div>
-
-      <div class="blog-card" data-tag="wfh">
-        <div class="blog-image">
-          <i class="fas fa-headset"></i>
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Work From Home</span>
-            <span class="blog-date"><i class="fas fa-calendar"></i> Feb 14, 2025</span>
-          </div>
-          <h3>How to Ace Your First Work From Home Job Interview</h3>
-          <p>Your first remote job interview can feel intimidating. Here's a complete guide on how to prepare, what to wear, and what to say to land the job.</p>
-          <a href="blog-post.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-        </div>
-      </div>
-
-      <div class="blog-card" data-tag="women">
-        <div class="blog-image">
-          <i class="fas fa-hands-helping"></i>
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Women Empowerment</span>
-            <span class="blog-date"><i class="fas fa-calendar"></i> Feb 18, 2025</span>
-          </div>
-          <h3>From Homemaker to Earner — Real Stories from TheBirbal Community</h3>
-          <p>Meet three incredible women who transformed their lives through work from home opportunities. Their journeys will inspire and motivate you to take that first step.</p>
-          <a href="blog-post.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- NEWSLETTER -->
-  <section class="newsletter">
-    <h2>Stay <span>Updated</span></h2>
-    <p>Get our latest articles and opportunities delivered straight to your inbox.</p>
-    <div class="newsletter-form">
-      <input type="email" placeholder="Enter your email address" />
-      <button class="btn btn-primary">Subscribe</button>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-logo">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal Logo" />
-    </div>
-    <p>Empowering women. Enabling business. Building futures.</p>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="careers.html">Join Us</a>
-      <a href="people.html">Our People</a>
-      <a href="blog.html">Blog</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <div class="footer-social">
-      <a href="https://www.linkedin.com/company/thebirbal/" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://www.instagram.com/thebirbal_wfh/" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.youtube.com/@thebirbalWFH" target="_blank"><i class="fab fa-youtube"></i></a>
-    </div>
-    <p class="footer-copy">&copy; 2025 TheBirbal. All rights reserved.</p>
-  </footer>
-
-  <script src="js/main.js"></script>
+<script>
+  const loader=document.getElementById('loader');
+  if(sessionStorage.getItem('birbalLoaded')){loader.style.display='none'}else{sessionStorage.setItem('birbalLoaded','1');window.addEventListener('load',()=>setTimeout(()=>loader.classList.add('hide'),2000))}
+  const html=document.documentElement;
+  const saved=localStorage.getItem('birbalTheme')||'light';
+  html.setAttribute('data-theme',saved);
+  document.getElementById('themeIcon').className=saved==='dark'?'fas fa-moon':'fas fa-sun';
+  document.getElementById('themeToggle').addEventListener('click',()=>{const next=html.getAttribute('data-theme')==='light'?'dark':'light';html.setAttribute('data-theme',next);localStorage.setItem('birbalTheme',next);document.getElementById('themeIcon').className=next==='dark'?'fas fa-moon':'fas fa-sun'});
+  const nt=document.getElementById('navToggle'),nl=document.getElementById('navLinks');
+  nt.addEventListener('click',()=>nl.classList.toggle('open'));
+  nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nl.classList.remove('open')));
+  // TAG FILTER
+  const tagBtns=document.querySelectorAll('.tag-btn');
+  const blogCards=document.querySelectorAll('.blog-card');
+  const featuredCard=document.querySelector('.featured-card');
+  tagBtns.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      tagBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const tag=btn.dataset.tag;
+      let visible=0;
+      blogCards.forEach(card=>{
+        const show=tag==='all'||card.dataset.tag===tag;
+        card.style.display=show?'flex':'none';
+        if(show)visible++;
+      });
+      // Featured card
+      if(featuredCard){
+        const featShow=tag==='all'||featuredCard.dataset.tag===tag;
+        document.getElementById('featuredWrap').style.display=featShow?'block':'none';
+      }
+      document.getElementById('noResults').style.display=visible===0?'block':'none';
+    });
+  });
+  // NEWSLETTER
+  document.getElementById('nlBtn').addEventListener('click',()=>{
+    const email=document.getElementById('nlEmail').value.trim();
+    const btn=document.getElementById('nlBtn');
+    if(email&&email.includes('@')){
+      btn.innerHTML='<i class="fas fa-check"></i> Subscribed!';
+      btn.style.background='#22c55e';
+      document.getElementById('nlEmail').value='';
+      setTimeout(()=>{btn.innerHTML='<i class="fas fa-paper-plane"></i> Subscribe';btn.style.background=''},3000);
+    } else {
+      document.getElementById('nlEmail').style.outline='2px solid #ef4444';
+      setTimeout(()=>document.getElementById('nlEmail').style.outline='',2000);
+    }
+  });
+  // BACK TO TOP
+  const bt=document.getElementById('backTop');
+  window.addEventListener('scroll',()=>bt.classList.toggle('show',window.scrollY>400));
+  bt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+</script>
 </body>
 </html>
