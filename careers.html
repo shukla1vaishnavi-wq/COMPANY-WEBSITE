@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Join Us | TheBirbal</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-logo">The<span>Birbal</span></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="careers.html" class="active">Join Us</a></li>
+      <li><a href="people.html">Our People</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-toggle" id="navToggle">
+      <i class="fas fa-bars"></i>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <h1>Join <span>Us</span></h1>
+    <p>Find your perfect work from home opportunity and start earning today.</p>
+  </section>
+
+  <!-- SEARCH & FILTER -->
+  <section class="careers-filter">
+    <div class="filter-bar">
+      <input type="text" id="jobSearch" placeholder="Search jobs..." />
+      <select id="jobType">
+        <option value="all">All Types</option>
+        <option value="fulltime">Full Time</option>
+        <option value="parttime">Part Time</option>
+        <option value="remote">Remote</option>
+      </select>
+      <select id="jobCategory">
+        <option value="all">All Categories</option>
+        <option value="sales">Sales</option>
+        <option value="support">Customer Support</option>
+        <option value="recruitment">Recruitment</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- JOB LISTINGS -->
+  <section class="job-listings">
+    <div class="jobs-grid" id="jobsGrid">
+
+      <div class="job-card" data-type="remote" data-category="sales">
+        <div class="job-header">
+          <div>
+            <h3>Sales Executive</h3>
+            <p class="job-company">TheBirbal Network</p>
+          </div>
+          <span class="job-badge remote">Remote</span>
+        </div>
+        <div class="job-details">
+          <span><i class="fas fa-map-marker-alt"></i> Work From Home</span>
+          <span><i class="fas fa-clock"></i> Flexible Hours</span>
+          <span><i class="fas fa-rupee-sign"></i> 15,000 - 25,000/month</span>
+        </div>
+        <p class="job-desc">Drive sales for our partner businesses from the comfort of your home. No prior experience required — full training provided.</p>
+        <a href="contact.html" class="btn btn-primary">Apply Now</a>
+      </div>
+
+      <div class="job-card" data-type="parttime" data-category="support">
+        <div class="job-header">
+          <div>
+            <h3>Customer Support Specialist</h3>
+            <p class="job-company">TheBirbal Network</p>
+          </div>
+          <span class="job-badge parttime">Part Time</span>
+        </div>
+        <div class="job-details">
+          <span><i class="fas fa-map-marker-alt"></i> Work From Home</span>
+          <span><i class="fas fa-clock"></i> 4 hrs/day</span>
+          <span><i class="fas fa-rupee-sign"></i> 8,000 - 12,000/month</span>
+        </div>
+        <p class="job-desc">Handle customer queries and provide support for our partner brands. Great communication skills required.</p>
+        <a href="contact.html" class="btn btn-primary">Apply Now</a>
+      </div>
+
+      <div class="job-card" data-type="fulltime" data-category="recruitment">
+        <div class="job-header">
+          <div>
+            <h3>Recruitment Coordinator</h3>
+            <p class="job-company">TheBirbal Network</p>
+          </div>
+          <span class="job-badge fulltime">Full Time</span>
+        </div>
+        <div class="job-details">
+          <span><i class="fas fa-map-marker-alt"></i> Work From Home</span>
+          <span><i class="fas fa-clock"></i> 8 hrs/day</span>
+          <span><i class="fas fa-rupee-sign"></i> 20,000 - 30,000/month</span>
+        </div>
+        <p class="job-desc">Source, screen and onboard candidates for our partner companies. HR background preferred but not mandatory.</p>
+        <a href="contact.html" class="btn btn-primary">Apply Now</a>
+      </div>
+
+      <div class="job-card" data-type="remote" data-category="sales">
+        <div class="job-header">
+          <div>
+            <h3>Telecalling Executive</h3>
+            <p class="job-company">TheBirbal Network</p>
+          </div>
+          <span class="job-badge remote">Remote</span>
+        </div>
+        <div class="job-details">
+          <span><i class="fas fa-map-marker-alt"></i> Work From Home</span>
+          <span><i class="fas fa-clock"></i> Flexible Hours</span>
+          <span><i class="fas fa-rupee-sign"></i> 10,000 - 18,000/month</span>
+        </div>
+        <p class="job-desc">Make outbound calls to potential customers and generate leads for our partner businesses. Freshers welcome.</p>
+        <a href="contact.html" class="btn btn-primary">Apply Now</a>
+      </div>
+
+      <div class="job-card" data-type="parttime" data-category="support">
+        <div class="job-header">
+          <div>
+            <h3>Chat Support Agent</h3>
+            <p class="job-company">TheBirbal Network</p>
+          </div>
+          <span class="job-badge parttime">Part Time</span>
+        </div>
+        <div class="job-details">
+          <span><i class="fas fa-map-marker-alt"></i> Work From Home</span>
+          <span><i class="fas fa-clock"></i> 3-4 hrs/day</span>
+          <span><i class="fas fa-rupee-sign"></i> 6,000 - 10,000/month</span>
+        </div>
+        <p class="job-desc">Handle customer queries via live chat for e-commerce and service brands. Good typing speed required.</p>
+        <a href="contact.html" class="btn btn-primary">Apply Now</a>
+      </div>
+
+      <div class="job-card" data-type="fulltime" data-category="recruitment">
+        <div class="job-header">
+          <div>
+            <h3>HR Executive</h3>
+            <p class="job-company">TheBirbal Network</p>
+          </div>
+          <span class="job-badge fulltime">Full Time</span>
+        </div>
+        <div class="job-details">
+          <span><i class="fas fa-map-marker-alt"></i> Work From Home</span>
+          <span><i class="fas fa-clock"></i> 8 hrs/day</span>
+          <span><i class="fas fa-rupee-sign"></i> 18,000 - 28,000/month</span>
+        </div>
+        <p class="job-desc">Manage end-to-end HR operations including hiring, onboarding and employee engagement for partner companies.</p>
+        <a href="contact.html" class="btn btn-primary">Apply Now</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">The<span>Birbal</span></div>
+      <p>Empowering women. Enabling business. Building futures.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="careers.html">Join Us</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+      </div>
+      <p class="footer-copy">&copy; 2025 TheBirbal. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
