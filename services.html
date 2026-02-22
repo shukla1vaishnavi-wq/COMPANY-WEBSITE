@@ -58,10 +58,6 @@
     .svc-inner.reverse{direction:rtl}
     .svc-inner.reverse>*{direction:ltr}
     .svc-visual{position:relative}
-    .svc-icon-box{width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--border);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;box-shadow:var(--shadow-lg);transition:all var(--transition)}
-    .svc-icon-box:hover{transform:translateY(-4px)}
-    .svc-icon-box i{font-size:4rem;color:var(--primary);opacity:.85}
-    .svc-icon-box span{font-size:.95rem;font-weight:600;color:var(--text2)}
     .svc-badge{position:absolute;bottom:-16px;right:-16px;background:var(--primary);color:#fff;border-radius:12px;padding:12px 18px;font-size:.8rem;font-weight:700;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:8px}
     .svc-content h2{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,2.5vw,2.2rem);font-weight:800;color:var(--text);margin:12px 0 16px;line-height:1.25}
     .svc-content h2 span{color:var(--primary)}
@@ -179,7 +175,8 @@
 <section class="svc-section" id="sales">
   <div class="svc-inner reveal">
     <div class="svc-visual">
-      <div class="svc-icon-box"><i class="fas fa-phone-alt"></i><span>Sales Support</span></div>
+      <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&q=80"
+           alt="Sales Support" style="width:100%;border-radius:20px;aspect-ratio:4/3;object-fit:cover;box-shadow:var(--shadow-lg)"/>
       <div class="svc-badge"><i class="fas fa-check-circle"></i> Plug & Play in 1 Week</div>
     </div>
     <div class="svc-content">
@@ -201,29 +198,28 @@
 </section>
 
 <!-- CUSTOMER SUPPORT -->
-<div class="alt-bg" id="customer" style="padding-top:96px;padding-bottom:96px">
-  <div class="alt-bg" style="background:none;padding:0!important">
-    <div style="max-width:1200px;margin:0 auto;padding:0 0">
-      <div class="svc-inner reverse reveal">
-        <div class="svc-visual">
-          <div class="svc-icon-box"><i class="fas fa-headset"></i><span>Customer Support</span></div>
-          <div class="svc-badge"><i class="fas fa-star"></i> 15+ Languages</div>
-        </div>
-        <div class="svc-content">
-          <span class="eyebrow">Service 02</span>
-          <h2>Customer <span>Support</span></h2>
-          <p>Deliver exceptional customer experiences across every channel. Our experienced support teams handle inbound and outbound calls, live chat, and email support with professionalism and empathy.</p>
-          <p>Our seasoned workforce understands business dynamics and strives to deliver the best of their potential for your customers.</p>
-          <ul class="svc-list">
-            <li><i class="fas fa-check"></i> Inbound & Outbound Call Handling</li>
-            <li><i class="fas fa-check"></i> Live Chat & Email Support</li>
-            <li><i class="fas fa-check"></i> Multi-channel Customer Engagement</li>
-            <li><i class="fas fa-check"></i> Complaint Resolution & Escalation</li>
-            <li><i class="fas fa-check"></i> CSAT Monitoring & Quality Assurance</li>
-            <li><i class="fas fa-check"></i> 15+ Language Support</li>
-          </ul>
-          <a href="contact.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Enquire Now</a>
-        </div>
+<div style="background:var(--bg2);padding:96px 60px" id="customer">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="svc-inner reverse reveal">
+      <div class="svc-visual">
+        <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&q=80"
+             alt="Customer Support" style="width:100%;border-radius:20px;aspect-ratio:4/3;object-fit:cover;box-shadow:var(--shadow-lg)"/>
+        <div class="svc-badge"><i class="fas fa-star"></i> 15+ Languages</div>
+      </div>
+      <div class="svc-content">
+        <span class="eyebrow">Service 02</span>
+        <h2>Customer <span>Support</span></h2>
+        <p>Deliver exceptional customer experiences across every channel. Our experienced support teams handle inbound and outbound calls, live chat, and email support with professionalism and empathy.</p>
+        <p>Our seasoned workforce understands business dynamics and strives to deliver the best of their potential for your customers.</p>
+        <ul class="svc-list">
+          <li><i class="fas fa-check"></i> Inbound & Outbound Call Handling</li>
+          <li><i class="fas fa-check"></i> Live Chat & Email Support</li>
+          <li><i class="fas fa-check"></i> Multi-channel Customer Engagement</li>
+          <li><i class="fas fa-check"></i> Complaint Resolution & Escalation</li>
+          <li><i class="fas fa-check"></i> CSAT Monitoring & Quality Assurance</li>
+          <li><i class="fas fa-check"></i> 15+ Language Support</li>
+        </ul>
+        <a href="contact.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Enquire Now</a>
       </div>
     </div>
   </div>
@@ -233,7 +229,8 @@
 <section class="svc-section" id="recruitment">
   <div class="svc-inner reveal">
     <div class="svc-visual">
-      <div class="svc-icon-box"><i class="fas fa-user-tie"></i><span>Recruitment Support</span></div>
+      <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=80"
+           alt="Recruitment Support" style="width:100%;border-radius:20px;aspect-ratio:4/3;object-fit:cover;box-shadow:var(--shadow-lg)"/>
       <div class="svc-badge"><i class="fas fa-users"></i> End-to-End Hiring</div>
     </div>
     <div class="svc-content">
@@ -259,7 +256,8 @@
   <div style="max-width:1200px;margin:0 auto">
     <div class="svc-inner reverse reveal">
       <div class="svc-visual">
-        <div class="svc-icon-box"><i class="fas fa-chart-line"></i><span>Transaction Services</span></div>
+        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=80"
+             alt="Transaction Services" style="width:100%;border-radius:20px;aspect-ratio:4/3;object-fit:cover;box-shadow:var(--shadow-lg)"/>
         <div class="svc-badge"><i class="fas fa-briefcase"></i> CFA Expertise</div>
       </div>
       <div class="svc-content">
@@ -285,7 +283,8 @@
 <section class="svc-section" id="hotel">
   <div class="svc-inner reveal">
     <div class="svc-visual">
-      <div class="svc-icon-box"><i class="fas fa-hotel"></i><span>Hotel Call Center</span></div>
+      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80"
+           alt="Hotel Call Center" style="width:100%;border-radius:20px;aspect-ratio:4/3;object-fit:cover;box-shadow:var(--shadow-lg)"/>
       <div class="svc-badge"><i class="fas fa-concierge-bell"></i> Hospitality Experts</div>
     </div>
     <div class="svc-content">
@@ -396,7 +395,8 @@
   window.addEventListener('scroll',()=>{let cur='';sections.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-130)cur=id});tabs.forEach(t=>t.classList.toggle('active',t.getAttribute('href')==='#'+cur))});
   // Stats counter
   const counters=document.querySelectorAll('.counter');
-  const so=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;counters.forEach(c=>{const t=+c.dataset.target,s=t/80;let cur=0;const tick=()=>{cur=Math.min(cur+s,t);c.textContent=Math.ceil(cur);if(cur<t)requestAnimationFrame(tick)};tick()});so.disconnect()})},{threshold:.5});
+  let countersAnimated=false;
+  const so=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting||countersAnimated)return;countersAnimated=true;counters.forEach(c=>{const t=+c.dataset.target,dur=1600,start=performance.now();const tick=now=>{const p=Math.min((now-start)/dur,1),eased=1-Math.pow(1-p,3);c.textContent=Math.ceil(eased*t);if(p<1)requestAnimationFrame(tick)};requestAnimationFrame(tick)});so.disconnect()})},{threshold:.5});
   const sb=document.querySelector('.stats-strip');if(sb)so.observe(sb);
   // Reveal
   const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');Array.from(e.target.children).forEach((c,i)=>c.style.transitionDelay=i*.08+'s')}})},{threshold:.08});
