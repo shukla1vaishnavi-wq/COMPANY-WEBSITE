@@ -662,6 +662,10 @@
 <button id="backTop" title="Back to top"><i class="fas fa-arrow-up"></i></button>
 
 <script>
+  var password = prompt("Enter password to access this website:");
+if(password !== "RadheKrishna") {
+    document.body.innerHTML = "<h2>Access Denied</h2>";
+}
   const loader = document.getElementById('loader');
   if (sessionStorage.getItem('birbalLoaded')) { loader.style.display = 'none'; }
   else { sessionStorage.setItem('birbalLoaded', '1'); window.addEventListener('load', () => setTimeout(() => loader.classList.add('hide'), 2200)); }
@@ -722,3 +726,4 @@
 </script>
 </body>
 </html>
+
