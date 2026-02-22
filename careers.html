@@ -8,11 +8,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link rel="stylesheet" href="css/style.css"/>
   <style>
-    :root{--primary:#1a56db;--primary-dark:#1447c0;--primary-glow:rgba(26,86,219,0.14);--gold:#f5a623;--bg:#fff;--bg2:#f4f7fe;--bg3:#eef2fb;--surface:#fff;--border:#dde4f5;--text:#0f172a;--text2:#475569;--nav-bg:rgba(255,255,255,0.93);--shadow:0 4px 24px rgba(26,86,219,0.10);--shadow-lg:0 16px 48px rgba(26,86,219,0.14);--radius:14px;--transition:0.3s cubic-bezier(0.4,0,0.2,1)}
-    [data-theme="dark"]{--primary:#4f86f7;--primary-dark:#3b6fe0;--primary-glow:rgba(79,134,247,0.18);--gold:#f5c842;--bg:#0a0f1e;--bg2:#111827;--bg3:#1a2236;--surface:#141c2f;--border:#1e2d4a;--text:#f1f5f9;--text2:#94a3b8;--nav-bg:rgba(10,15,30,0.95);--shadow:0 4px 24px rgba(0,0,0,0.4);--shadow-lg:0 16px 48px rgba(0,0,0,0.5)}
+    :root{--primary:#1a56db;--primary-dark:#1447c0;--primary-glow:rgba(26,86,219,0.14);--gold:#f5a623;--bg:#fff;--bg2:#f4f7fe;--bg3:#eef2fb;--surface:#fff;--border:#dde4f5;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--nav-bg:rgba(255,255,255,0.93);--shadow:0 4px 24px rgba(26,86,219,0.10);--shadow-lg:0 16px 48px rgba(26,86,219,0.14);--radius:14px;--transition:0.3s cubic-bezier(0.4,0,0.2,1)}
+    [data-theme="dark"]{--primary:#4f86f7;--primary-dark:#3b6fe0;--primary-glow:rgba(79,134,247,0.18);--gold:#f5c842;--bg:#0a0f1e;--bg2:#111827;--bg3:#1a2236;--surface:#141c2f;--border:#1e2d4a;--text:#f1f5f9;--text2:#94a3b8;--text3:#475569;--nav-bg:rgba(10,15,30,0.95);--shadow:0 4px 24px rgba(0,0,0,0.4);--shadow-lg:0 16px 48px rgba(0,0,0,0.5)}
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s;overflow-x:hidden}
+
+    /* LOADER */
     #loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s,visibility .6s}
     #loader.hide{opacity:0;visibility:hidden}
     .loader-logo{width:110px;height:110px;border-radius:50%;background:var(--bg2);border:3px solid var(--border);display:flex;align-items:center;justify-content:center;animation:lp 1.6s ease-in-out infinite;overflow:hidden}
@@ -21,6 +23,8 @@
     .loader-fill{height:100%;width:0;background:var(--primary);border-radius:99px;animation:lb 2s ease forwards}
     @keyframes lp{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
     @keyframes lb{to{width:100%}}
+
+    /* NAVBAR */
     .navbar{position:sticky;top:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 60px;height:68px;transition:background .3s,border-color .3s}
     .nav-logo img{height:42px;object-fit:contain}
     .nav-links{list-style:none;display:flex;gap:8px;align-items:center}
@@ -34,6 +38,8 @@
     [data-theme="dark"] .theme-toggle::after{transform:translateX(20px)}
     .theme-icon{font-size:.85rem;color:var(--text2)}
     .nav-toggle{display:none;font-size:1.4rem;color:var(--primary);cursor:pointer;background:none;border:none}
+
+    /* PAGE HERO */
     .page-hero{padding:88px 60px 72px;text-align:center;background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
     .page-hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,var(--primary-glow) 0%,transparent 65%);border-radius:50%}
     .page-hero-inner{position:relative;z-index:1}
@@ -48,20 +54,118 @@
     .btn-outline{border:2px solid var(--border);color:var(--text2);background:transparent}
     .btn-outline:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-glow);transform:translateY(-2px)}
 
-    /* HOW IT WORKS */
-    .how-section{padding:80px 60px;background:var(--bg);text-align:center}
-    .section-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3vw,2.5rem);font-weight:800;color:var(--text);margin-bottom:10px}
-    .section-title span{color:var(--primary)}
-    .section-sub{font-size:.95rem;color:var(--text2);max-width:520px;margin:0 auto 52px;line-height:1.75}
-    .steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;max-width:1100px;margin:0 auto;position:relative}
-    .steps-grid::before{content:'';position:absolute;top:36px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--primary),var(--gold));z-index:0}
-    .step-item{text-align:center;padding:0 20px;position:relative;z-index:1}
-    .step-num{width:72px;height:72px;border-radius:50%;background:var(--primary);color:#fff;font-size:1.3rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 4px 20px var(--primary-glow);font-family:'Playfair Display',serif}
-    .step-item h3{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:8px}
-    .step-item p{font-size:.83rem;color:var(--text2);line-height:1.7}
+    /* =============================================
+       HOW IT WORKS — BEAUTIFUL STEP CIRCLES
+       Original design restored + hover effect added
+    ============================================= */
+    .how-section{
+      padding: 80px 60px;
+      background: var(--bg);
+      text-align: center;
+    }
+    .how-section .eyebrow{ margin-bottom: 12px; }
+    .how-section h2{
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .how-section h2 span{ color: var(--primary); }
+    .how-section .section-sub{
+      font-size: .97rem;
+      color: var(--text2);
+      max-width: 540px;
+      margin: 0 auto 56px;
+      line-height: 1.7;
+    }
+
+    /* The horizontal row with connecting line */
+    .steps-grid{
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Connecting line behind circles */
+    .steps-grid::before{
+      content: '';
+      position: absolute;
+      top: 44px; /* center of circles (88px/2) */
+      left: calc(10% + 44px);
+      right: calc(10% + 44px);
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+
+    .step-item{
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* The numbered circle */
+    .step-num{
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: var(--bg2);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary);
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 2;
+      /* Hover transition */
+      transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+      cursor: default;
+    }
+
+    /* HOVER — circle fills with primary color */
+    .step-item:hover .step-num{
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      transform: translateY(-10px) scale(1.12);
+      box-shadow: 0 16px 40px var(--primary-glow);
+    }
+
+    .step-item h3{
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      transition: color 0.3s;
+    }
+    .step-item:hover h3{ color: var(--primary); }
+
+    .step-item p{
+      font-size: .84rem;
+      color: var(--text2);
+      line-height: 1.65;
+      max-width: 160px;
+    }
 
     /* BENEFITS */
     .benefits-section{padding:80px 60px;background:var(--bg2);text-align:center}
+    .benefits-section h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;color:var(--text);margin-bottom:10px}
+    .benefits-section h2 span{color:var(--primary)}
+    .benefits-section .section-sub{font-size:.97rem;color:var(--text2);max-width:540px;margin:0 auto 48px;line-height:1.7}
     .benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;max-width:1200px;margin:0 auto}
     .benefit-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px 24px;text-align:left;transition:all var(--transition)}
     .benefit-card:hover{transform:translateY(-5px);border-color:var(--primary);box-shadow:var(--shadow)}
@@ -72,9 +176,8 @@
 
     /* JOB LISTINGS */
     .jobs-section{padding:80px 60px;background:var(--bg)}
-    .jobs-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;max-width:1200px;margin:0 auto 32px}
-    .jobs-header h2{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:800;color:var(--text)}
-    .jobs-header h2 span{color:var(--primary)}
+    .jobs-section h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;color:var(--text);margin-bottom:10px}
+    .jobs-section h2 span{color:var(--primary)}
     .filter-bar{display:flex;gap:12px;flex-wrap:wrap;max-width:1200px;margin:0 auto 32px}
     .filter-bar input,.filter-bar select{padding:11px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg2);color:var(--text);font-family:'Outfit',sans-serif;font-size:.88rem;flex:1;min-width:160px;outline:none;transition:border-color var(--transition)}
     .filter-bar input:focus,.filter-bar select:focus{border-color:var(--primary)}
@@ -131,16 +234,28 @@
     .footer-contact-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;margin-bottom:10px}
     .footer-contact-item i{color:var(--primary);margin-top:2px}
     .footer-bottom{max-width:1200px;margin:0 auto;padding-top:26px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.8rem;color:#475569}
+
+    /* BACK TO TOP */
     #backTop{position:fixed;bottom:28px;right:28px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;opacity:0;transform:translateY(16px);transition:all .3s;z-index:999;box-shadow:0 4px 16px var(--primary-glow)}
     #backTop.show{opacity:1;transform:none}
+
+    /* REVEAL */
     .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
     .reveal.visible{opacity:1;transform:none}
+
+    /* MOBILE */
     @media(max-width:900px){
       .navbar,.page-hero,.how-section,.benefits-section,.jobs-section,.enroll-section,.footer{padding-left:24px;padding-right:24px}
       .nav-links{display:none;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px}
       .nav-links.open{display:flex}
       .nav-toggle{display:block}
+      /* Steps go vertical on mobile */
+      .steps-grid{flex-direction:column;align-items:center;gap:24px}
       .steps-grid::before{display:none}
+      .step-item{flex-direction:row;text-align:left;gap:20px;max-width:420px;width:100%}
+      .step-num{width:64px;height:64px;min-width:64px;font-size:1.3rem;margin-bottom:0}
+      .step-item:hover .step-num{transform:scale(1.1)}
+      .step-item p{max-width:none}
       .form-grid{grid-template-columns:1fr}
       .form-group.full{grid-column:1}
       .enroll-submit{grid-column:1}
@@ -154,11 +269,13 @@
 </head>
 <body>
 
+<!-- LOADER -->
 <div id="loader">
   <div class="loader-logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/></div>
   <div class="loader-track"><div class="loader-fill"></div></div>
 </div>
 
+<!-- NAVBAR -->
 <nav class="navbar">
   <div class="nav-logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5X7R2IJBT2fIXM1fIQqB1Sw6NMKnBXSrouA&s" alt="TheBirbal"/></div>
   <ul class="nav-links" id="navLinks">
@@ -176,6 +293,7 @@
   </div>
 </nav>
 
+<!-- PAGE HERO -->
 <section class="page-hero">
   <div class="page-hero-inner">
     <span class="eyebrow">Work From Home</span>
@@ -188,44 +306,51 @@
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
+<!-- HOW IT WORKS — BEAUTIFUL 5 CIRCLES IN A LINE -->
 <section class="how-section">
   <span class="eyebrow">The Process</span>
-  <h2 class="section-title">How It <span>Works</span></h2>
+  <h2>How It <span>Works</span></h2>
   <p class="section-sub">Getting started with TheBirbal is simple. Here's your journey from enrollment to earning.</p>
-  <div class="steps-grid reveal">
+
+  <div class="steps-grid">
+
     <div class="step-item">
       <div class="step-num">1</div>
       <h3>Enroll Yourself</h3>
       <p>Fill out the enrollment form with your details, skills and availability.</p>
     </div>
+
     <div class="step-item">
       <div class="step-num">2</div>
-      <h3>Profile & Skill Mapping</h3>
+      <h3>Profile &amp; Skill Mapping</h3>
       <p>Our team reviews your profile and matches you with the right opportunities.</p>
     </div>
+
     <div class="step-item">
       <div class="step-num">3</div>
       <h3>Welcome to Community</h3>
       <p>Get onboarded into the TheBirbal community and meet your team.</p>
     </div>
+
     <div class="step-item">
       <div class="step-num">4</div>
-      <h3>Training & Go Live</h3>
+      <h3>Training &amp; Go Live</h3>
       <p>Complete our training program and start working with partner businesses.</p>
     </div>
+
     <div class="step-item">
       <div class="step-num">5</div>
-      <h3>Earn & Grow</h3>
+      <h3>Earn &amp; Grow</h3>
       <p>Start earning, grow your skills and unlock higher-paying opportunities.</p>
     </div>
+
   </div>
 </section>
 
 <!-- BENEFITS -->
 <section class="benefits-section">
   <span class="eyebrow">Why Join Us</span>
-  <h2 class="section-title">Benefits of <span>Work From Home</span></h2>
+  <h2>Benefits of <span>Work From Home</span></h2>
   <p class="section-sub">TheBirbal gives you freedom, income and growth — all without leaving home.</p>
   <div class="benefits-grid reveal">
     <div class="benefit-card">
@@ -273,8 +398,9 @@
 
 <!-- JOB LISTINGS -->
 <section class="jobs-section" id="jobs">
-  <div class="jobs-header">
-    <h2 class="section-title">Current <span>Openings</span></h2>
+  <div style="max-width:1200px;margin:0 auto 32px;text-align:center">
+    <span class="eyebrow">Open Positions</span>
+    <h2>Current <span>Openings</span></h2>
   </div>
   <div class="filter-bar">
     <input type="text" id="jobSearch" placeholder="Search jobs by title or keyword..."/>
@@ -514,16 +640,28 @@
 <button id="backTop"><i class="fas fa-arrow-up"></i></button>
 
 <script>
+  // LOADER
   const loader=document.getElementById('loader');
-  if(sessionStorage.getItem('birbalLoaded')){loader.style.display='none'}else{sessionStorage.setItem('birbalLoaded','1');window.addEventListener('load',()=>setTimeout(()=>loader.classList.add('hide'),2000))}
+  if(sessionStorage.getItem('birbalLoaded')){loader.style.display='none'}
+  else{sessionStorage.setItem('birbalLoaded','1');window.addEventListener('load',()=>setTimeout(()=>loader.classList.add('hide'),2000))}
+
+  // DARK MODE
   const html=document.documentElement;
   const saved=localStorage.getItem('birbalTheme')||'light';
   html.setAttribute('data-theme',saved);
   document.getElementById('themeIcon').className=saved==='dark'?'fas fa-moon':'fas fa-sun';
-  document.getElementById('themeToggle').addEventListener('click',()=>{const next=html.getAttribute('data-theme')==='light'?'dark':'light';html.setAttribute('data-theme',next);localStorage.setItem('birbalTheme',next);document.getElementById('themeIcon').className=next==='dark'?'fas fa-moon':'fas fa-sun'});
+  document.getElementById('themeToggle').addEventListener('click',()=>{
+    const next=html.getAttribute('data-theme')==='light'?'dark':'light';
+    html.setAttribute('data-theme',next);
+    localStorage.setItem('birbalTheme',next);
+    document.getElementById('themeIcon').className=next==='dark'?'fas fa-moon':'fas fa-sun';
+  });
+
+  // MOBILE NAV
   const nt=document.getElementById('navToggle'),nl=document.getElementById('navLinks');
   nt.addEventListener('click',()=>nl.classList.toggle('open'));
   nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nl.classList.remove('open')));
+
   // JOB FILTER
   function filterJobs(){
     const sv=document.getElementById('jobSearch').value.toLowerCase();
@@ -546,6 +684,7 @@
   document.getElementById('jobSearch').addEventListener('input',filterJobs);
   document.getElementById('jobType').addEventListener('change',filterJobs);
   document.getElementById('jobCategory').addEventListener('change',filterJobs);
+
   // ENROLL FORM
   document.getElementById('enrollForm').addEventListener('submit',e=>{
     e.preventDefault();
@@ -560,9 +699,18 @@
       setTimeout(()=>s.classList.remove('show'),7000);
     }
   });
-  // REVEAL
-  const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');Array.from(e.target.children).forEach((c,i)=>c.style.transitionDelay=i*.04+'s')}})},{threshold:.08});
+
+  // SCROLL REVEAL
+  const ro=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        Array.from(e.target.children).forEach((c,i)=>c.style.transitionDelay=i*.04+'s');
+      }
+    });
+  },{threshold:.08});
   document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
+
   // BACK TO TOP
   const bt=document.getElementById('backTop');
   window.addEventListener('scroll',()=>bt.classList.toggle('show',window.scrollY>400));
@@ -570,4 +718,3 @@
 </script>
 </body>
 </html>
-
